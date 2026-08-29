@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { AppShell } from "@/components/layout/app-shell";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/diagnostico")({ component: DiagnosticoPage });
@@ -27,7 +26,7 @@ function DiagnosticoPage() {
   const [t, setT] = useState(TONGUE[0]);
   const [p, setP] = useState(PULSE[0]);
   return (
-    <AppShell>
+    <>
       <h1 className="font-display text-3xl">Diagnóstico</h1>
       <p className="mt-1 text-sm text-muted">Toque na região. Apoio de estudo — não é diagnóstico automático.</p>
 
@@ -42,7 +41,7 @@ function DiagnosticoPage() {
           ))}
         </svg>
       </div>
-      <article className="mt-2 rounded-xl border border-border bg-surface p-4">
+      <article className="surface-card mt-2 p-4">
         <h3 className="font-display text-xl">{t.label}</h3>
         <p className="text-sm">{t.use}</p>
       </article>
@@ -52,7 +51,7 @@ function DiagnosticoPage() {
             key={z.label}
             type="button"
             onClick={() => setT(z)}
-            className={cn("min-h-11 rounded-full px-3 text-sm", t.label === z.label ? "bg-primary text-primary-fg" : "border border-border")}
+            className={cn("chip", t.label === z.label ? "bg-primary text-primary-fg" : "bg-border text-fg")}
           >
             {z.label}
           </button>
@@ -82,10 +81,10 @@ function DiagnosticoPage() {
           ))}
         </svg>
       </div>
-      <article className="mt-2 rounded-xl border border-border bg-surface p-4">
+      <article className="surface-card mt-2 p-4">
         <h3 className="font-display text-xl">{p.label}</h3>
         <p className="text-sm">{p.use}</p>
       </article>
-    </AppShell>
+    </>
   );
 }

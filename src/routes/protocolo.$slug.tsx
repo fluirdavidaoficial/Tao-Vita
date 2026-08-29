@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { AppShell } from "@/components/layout/app-shell";
+import { BookOpen } from "lucide-react";
+import { BackLink } from "@/components/ui/back-link";
+import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/ui/empty-state";
 import { getPoint } from "@/lib/acupuncture/points";
 import { getProtocol } from "@/lib/tcm/protocols";
 
@@ -10,14 +13,22 @@ function ProtocoloPage() {
   const p = getProtocol(slug);
   if (!p) {
     return (
-      <AppShell>
-        <p>Protocolo não encontrado.</p>
-      </AppShell>
+      <EmptyState
+        icon={BookOpen}
+        title="Protocolo não encontrado"
+        description="Essa queixa não está na lista. Abra os protocolos e escolha outra."
+        action={
+          <Button asChild>
+            <Link to="/protocolos">Ver protocolos</Link>
+          </Button>
+        }
+      />
     );
   }
   const top = p.ss[0];
   return (
-    <AppShell>
+    <>
+      <BackLink to="/protocolos" label="Protocolos" />
       <p className="text-xs uppercase tracking-widest text-muted">{p.g}</p>
       <p className="text-primary">{p.zh}</p>
       <h1 className="font-display text-3xl">{p.t}</h1>
@@ -26,7 +37,7 @@ function ProtocoloPage() {
       </p>
 
       {p.ss.map((s, i) => (
-        <section key={s.nome} className="mt-5 rounded-xl border border-border bg-surface p-4">
+        <section key={s.nome} className="surface-card mt-5 p-4">
           <h2 className="font-display text-xl">
             {i + 1}. {s.nome}
           </h2>
@@ -66,18 +77,18 @@ function ProtocoloPage() {
           <p className="text-sm">{s.ear.join(" · ")}</p>
           <h3 className="mt-3 text-xs uppercase tracking-widest text-muted">YNSA</h3>
           <p className="text-sm">{s.yn.join(" · ")}</p>
-          {s.ex.filter(Boolean).length > 0 && (
+          {s.ex.filter(Boolean).length > 0 ? (
             <>
               <h3 className="mt-3 text-xs uppercase tracking-widest text-muted">Extras</h3>
               <p className="text-sm">{s.ex.filter(Boolean).join(" · ")}</p>
             </>
-          )}
+          ) : null}
           <p className="mt-3 text-sm text-primary">{s.caut}</p>
           <p className="mt-1 text-xs text-ok">
             {s.tec} · Fontes: {s.fontes.join(", ")}
           </p>
         </section>
       ))}
-    </AppShell>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
-import { AuthProvider } from "@/lib/auth/provider";
+import { AppShell } from "@/components/layout/app-shell";
 import { PreviewHostBridge } from "@/components/preview-host-bridge";
+import { AuthProvider } from "@/lib/auth/provider";
 import appCss from "../styles.css?url";
 
 const APP_NAME = "Tao Vita";
@@ -30,14 +31,16 @@ export const Route = createRootRoute({
     ],
   }),
   component: () => (
-    <html lang="pt-BR" suppressHydrationWarning>
+    <html lang="pt-BR" className="antialiased" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body>
         <PreviewHostBridge />
         <AuthProvider>
-          <Outlet />
+          <AppShell>
+            <Outlet />
+          </AppShell>
         </AuthProvider>
         <Scripts />
       </body>
