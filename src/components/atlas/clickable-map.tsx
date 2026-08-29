@@ -1,69 +1,101 @@
-import { useState } from "react";
-import { MapDot } from "@/components/atlas/map-dot";
-import type { MapPoint } from "@/lib/tcm/maps";
+import { Link } from "@tanstack/react-router";
+import { useEffect, useMemo, useState } from "react";
+import { AtlasImage } from "@/components/ui/atlas-image";
+import type { AtlasMapPoint } from "@/lib/tcm/maps";
 import { cn } from "@/lib/utils";
 
 export function ClickableMap({
   src,
   alt,
   points,
-  tone = "ear",
+  tone,
   linked,
 }: {
   src: string;
   alt: string;
-  points: MapPoint[];
-  tone?: "ear" | "ynsa";
+  points: AtlasMapPoint[];
+  tone: "ear" | "ynsa";
   linked?: (label: string) => { slug: string; t: string }[];
 }) {
-  const [id, setId] = useState(points[0]?.id ?? "");
-  const active = points.find((p) => p.id === id) ?? points[0];
-  const related = active && linked ? linked(active.label) : [];
+  const sig = useMemo(() => points.map((p) => p.id).join("|"), [points]);
+  const firstId = points[0]?.id ?? "";
+  const [selId, setSelId] = useState(firstId);
+
+  useEffect(() => {
+    setSelId(firstId);
+  }, [sig, firstId]);
+
+  const sel = points.find((p) => p.id === selId) ?? points[0];
+  const related = sel && linked ? linked(sel.label) : [];
+  const active = tone === "ear" ? "bg-ear" : "bg-ynsa";
 
   return (
     <div>
-      <div className="relative overflow-hidden rounded-xl border border-border bg-surface">
-        <img src={src} alt={alt} className="block w-full select-none" />
+      <div className="relative overflow-hidden rounded-2xl bg-border/60 shadow-[var(--shadow-border)]">
+        <AtlasImage src={src} alt={alt} className="aspect-[3/4] w-full" imgClassName="object-cover" />
+        {points.map((p) => {
+          const on = p.id === sel?.id;
+          return (
+            <button
+              key={p.id}
+              type="button"
+              aria-label={p.label}
+              aria-pressed={on}
+              onClick={() => setSelId(p.id)}
+              className="absolute z-10 grid size-9 -translate-x-1/2 -translate-y-1/2 place-items-center"
+              style={{ left: `${p.x}%`, top: `${p.y}%` }}
+            >
+              <span
+                className={cn(
+                  "block rounded-full ring-2 ring-surface/90 transition-[transform,background-color,box-shadow] duration-150 ease-out",
+                  on ? cn("size-3.5 shadow-md", active) : "size-2.5 bg-primary-fg/90",
+                )}
+              />
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="mt-3 flex flex-wrap gap-1.5">
         {points.map((p) => (
-          <MapDot
+          <button
             key={p.id}
-            x={p.x}
-            y={p.y}
-            label={p.label}
-            tone={tone}
-            active={p.id === active?.id}
-            onClick={() => setId(p.id)}
-          />
+            type="button"
+            onClick={() => setSelId(p.id)}
+            className={cn(
+              "chip min-h-11 px-3 text-xs",
+              p.id === sel?.id ? cn(active, "text-primary-fg") : "bg-border text-fg",
+            )}
+          >
+            {p.label}
+          </button>
         ))}
       </div>
-      {active && (
-        <article className="mt-3 rounded-xl border border-border bg-surface p-4">
-          <p className="text-xs uppercase tracking-widest text-muted">{active.zone}</p>
-          <h2 className="font-display text-2xl">{active.label}</h2>
-          <p className="mt-1 text-sm">Para que serve: {active.use}</p>
-          {related.length > 0 && (
-            <p className="mt-2 text-sm text-muted">
-              Protocolos: {related.map((r) => r.t).join(" · ")}
-            </p>
-          )}
+
+      {sel ? (
+        <article className="surface-card mt-3 p-4">
+          <p className="text-xs uppercase tracking-widest text-muted">{sel.loc ?? (tone === "ear" ? "Orelha" : "YNSA")}</p>
+          <h2 className="font-display text-2xl">{sel.label}</h2>
+          <p className="mt-1 text-sm">{sel.use}</p>
+          {related.length > 0 ? (
+            <>
+              <p className="mt-3 text-xs uppercase tracking-widest text-muted">Protocolos</p>
+              <div className="mt-1 flex flex-wrap gap-2">
+                {related.map((r) => (
+                  <Link
+                    key={r.slug}
+                    to="/protocolo/$slug"
+                    params={{ slug: r.slug }}
+                    className="chip bg-fg text-primary-fg"
+                  >
+                    {r.t}
+                  </Link>
+                ))}
+              </div>
+            </>
+          ) : null}
         </article>
-      )}
-      <ul className="mt-3 grid grid-cols-2 gap-1.5">
-        {points.map((p) => (
-          <li key={p.id}>
-            <button
-              type="button"
-              onClick={() => setId(p.id)}
-              className={cn(
-                "flex min-h-11 w-full items-center rounded-lg border px-3 text-left text-sm",
-                p.id === active?.id ? "border-primary bg-primary text-primary-fg" : "border-border bg-surface",
-              )}
-            >
-              {p.label}
-            </button>
-          </li>
-        ))}
-      </ul>
+      ) : null}
     </div>
   );
 }

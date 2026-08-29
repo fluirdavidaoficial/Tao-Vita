@@ -1,64 +1,121 @@
-export type MapPoint = {
+import { earPoints, ynsaPoints } from "./protocols";
+
+export type AtlasMapPoint = {
   id: string;
   label: string;
-  zone: string;
-  use: string;
   x: number;
   y: number;
-  view: "ear" | "ynsa-front" | "ynsa-occiput" | "ynsa-lateral";
+  use: string;
+  loc?: string;
+  view?: "ynsa-front" | "ynsa-lateral" | "ynsa-occiput";
 };
 
-/** % sobre a foto da orelha direita (hélice à esquerda da imagem). */
-export const earMap: MapPoint[] = [
-  { id: "shenmen", label: "Shenmen", zone: "Fossa triangular", use: "Calma o Shen, dor, insônia, NADA.", x: 52, y: 29, view: "ear" },
-  { id: "utero", label: "Útero", zone: "Fossa triangular", use: "Ciclo, cólica, gineco (não na gravidez).", x: 48, y: 25, view: "ear" },
-  { id: "ciatico", label: "Ciático", zone: "Anti-hélice superior", use: "Dor que desce a perna.", x: 46, y: 31, view: "ear" },
-  { id: "lombar", label: "Lombar", zone: "Anti-hélice", use: "Lombalgia, Rim.", x: 49, y: 35, view: "ear" },
-  { id: "rim", label: "Rim", zone: "Cymba (concha superior)", use: "Lombar, zumbido, Jing, asma de fundo.", x: 50, y: 39, view: "ear" },
-  { id: "figado", label: "Fígado", zone: "Cymba posterior", use: "Qi do Fígado, TPM, olhos, irritação.", x: 43, y: 41, view: "ear" },
-  { id: "simpatico", label: "Simpático", zone: "Cruz inferior da anti-hélice", use: "SNA, cólica, asma, transpiração.", x: 38, y: 40, view: "ear" },
-  { id: "estomago", label: "Estômago", zone: "Cruz da hélice", use: "Gastrite, náusea, refluxo.", x: 47, y: 47, view: "ear" },
-  { id: "baco", label: "Baço", zone: "Cavum posterior", use: "Digestão, edema, joelho, umidade.", x: 42, y: 51, view: "ear" },
-  { id: "pulmao", label: "Pulmão", zone: "Cavum", use: "Asma, pele, NADA, rinite.", x: 47, y: 55, view: "ear" },
-  { id: "coracao", label: "Coração", zone: "Centro do cavum", use: "Shen, palpitação, ansiedade.", x: 52, y: 54, view: "ear" },
-  { id: "ombro", label: "Ombro", zone: "Escafa", use: "Dor e travamento do ombro.", x: 34, y: 46, view: "ear" },
-  { id: "joelho", label: "Joelho", zone: "Anti-hélice", use: "Dor no joelho.", x: 54, y: 42, view: "ear" },
-  { id: "cervical", label: "Cervical", zone: "Anti-hélice inferior", use: "Pescoço, torcicolo, irradiação.", x: 56, y: 58, view: "ear" },
-  { id: "adrenal", label: "Adrenal", zone: "Tragus", use: "Asma, rinite, fadiga (apoio).", x: 68, y: 52, view: "ear" },
-  { id: "pingchuan", label: "Pingchuan", zone: "Tragus", use: "Chiado, crise asmática (apoio).", x: 66, y: 48, view: "ear" },
-  { id: "endocrino", label: "Endócrino", zone: "Entalhe intertrágico", use: "Ciclo, menopausa, tireoide (apoio).", x: 66, y: 62, view: "ear" },
-  { id: "occipicio", label: "Occipício", zone: "Antitragus", use: "Cefaleia posterior, tontura.", x: 55, y: 66, view: "ear" },
-  { id: "tempora", label: "Têmpora", zone: "Antitragus", use: "Enxaqueca temporal.", x: 50, y: 70, view: "ear" },
-  { id: "nariz", label: "Nariz", zone: "Tragus / lóbulo alto", use: "Rinite, sinusite.", x: 62, y: 74, view: "ear" },
-  { id: "face", label: "Face", zone: "Lóbulo", use: "Paralisia facial, ATM.", x: 52, y: 84, view: "ear" },
-  { id: "ouvido", label: "Ouvido", zone: "Escafa / fossa", use: "Zumbido, otalgia.", x: 33, y: 58, view: "ear" },
-  { id: "has", label: "Hipertensão", zone: "Sulco posterior da hélice", use: "Apoio à pressão. Não substitui medicação.", x: 28, y: 68, view: "ear" },
+/** Alias usado no repositório original. */
+export type MapPoint = AtlasMapPoint;
+
+
+const earMeta = Object.fromEntries(earPoints.map(([label, loc, use]) => [label, { loc, use }]));
+const ynMeta = Object.fromEntries(ynsaPoints.map(([label, loc, use]) => [label, { loc, use }]));
+
+function E(label: string, x: number, y: number, loc?: string, use?: string): AtlasMapPoint {
+  const meta = earMeta[label];
+  return {
+    id: label,
+    label,
+    x,
+    y,
+    loc: loc ?? meta?.loc,
+    use: use ?? meta?.use ?? "Ponto de orelha usado nos protocolos.",
+  };
+}
+
+function Y(
+  id: string,
+  label: string,
+  view: NonNullable<AtlasMapPoint["view"]>,
+  x: number,
+  y: number,
+  loc?: string,
+  use?: string,
+): AtlasMapPoint {
+  const meta = ynMeta[label];
+  return {
+    id,
+    label,
+    view,
+    x,
+    y,
+    loc: loc ?? meta?.loc,
+    use: use ?? meta?.use ?? "Ponto YNSA usado nos protocolos.",
+  };
+}
+
+/** Percent coordinates on the 3:4 right-ear plate (`/images/maps/ear.jpg`). */
+export const earMap: AtlasMapPoint[] = [
+  E("Punho", 38, 19, "Escafa alta", "Punho / De Quervain."),
+  E("Cotovelo", 33, 27, "Escafa", "Epicondilite, cotovelo."),
+  E("Joelho", 41, 29),
+  E("Shenmen", 45, 32),
+  E("Calcanhar", 30, 31, "Cruz superior, perto da hélice", "Fascite, calcanhar."),
+  E("Útero", 41, 36),
+  E("Ombro", 36, 38),
+  E("Hipertensão", 39, 37, "Sulco da anti-hélice", "Apoio PA. Não substitui medicação."),
+  E("Ciático", 36, 41),
+  E("Simpático", 32, 42),
+  E("Lombar", 45, 43),
+  E("Sulco hipotensor", 34, 46, "Sulco inferior da anti-hélice", "Apoio PA."),
+  E("Fígado", 49, 46),
+  E("Rim", 42, 48),
+  E("Estômago", 57, 49),
+  E("Intestino Grosso", 41, 51),
+  E("IG", 47, 52, "Cymba / IG", "Intestino grosso (sigla nos protocolos)."),
+  E("Cardia", 65, 50, "Cruz da hélice", "Cárdia, refluxo, náusea."),
+  E("Cervical", 58, 53),
+  E("San Jiao", 61, 56, "Cavum, acima do intertragus", "Edema, San Jiao."),
+  E("Coração", 55, 59),
+  E("Ouvido", 70, 57, "Perto do meato / antitragus", "Zumbido, ouvido."),
+  E("Baço", 45, 60),
+  E("Pingchuan", 74, 47),
+  E("Adrenal", 80, 50),
+  E("Nariz", 78, 55),
+  E("Têmpora", 68, 61),
+  E("Occipício", 64, 65),
+  E("Pulmão", 51, 64),
+  E("Endócrino", 73, 66),
+  E("Cérebro", 61, 68),
+  E("Pele", 46, 68, "Cavum, com Pulmão", "Eczema, urticária — apoio."),
+  E("Bochecha", 58, 77, "Lóbulo alto", "Paralisia facial, bochecha."),
+  E("Face", 64, 83),
 ];
 
-export const ynsaMap: MapPoint[] = [
-  { id: "A", label: "A", zone: "Básico Yin · fronte", use: "Cervical e cabeça. Implantação capilar, ~0,5 cun lat. à linha média. Palpar o mais doloroso.", x: 46, y: 34, view: "ynsa-front" },
-  { id: "A2", label: "A", zone: "Básico Yin · fronte", use: "Par contralateral do ponto A.", x: 54, y: 34, view: "ynsa-front" },
-  { id: "M1", label: "M1", zone: "Cérebro", use: "Cérebro / Shen: sequela, agitação, insônia (estudo).", x: 50, y: 28, view: "ynsa-front" },
-  { id: "B1", label: "B1", zone: "Básico Yin", use: "Ombro e cintura escapular.", x: 38, y: 36, view: "ynsa-front" },
-  { id: "C1f", label: "C1", zone: "Básico Yin", use: "Membro superior em linha (frente).", x: 30, y: 40, view: "ynsa-front" },
-  { id: "S1", label: "S1", zone: "Sensorial", use: "Olho e cabeça anterior.", x: 42, y: 44, view: "ynsa-front" },
-  { id: "S2", label: "S2", zone: "Sensorial", use: "Nariz e seios da face.", x: 50, y: 48, view: "ynsa-front" },
-  { id: "S3", label: "S3", zone: "Sensorial", use: "Boca, ATM, face.", x: 50, y: 56, view: "ynsa-front" },
-  { id: "D", label: "D", zone: "Básico · costeleta", use: "Lombar e membro inferior. Região da costeleta, anterior à orelha.", x: 48, y: 52, view: "ynsa-lateral" },
-  { id: "C1L", label: "C1", zone: "Básico Yin", use: "Braço / membro superior em linha.", x: 46, y: 42, view: "ynsa-lateral" },
-  { id: "C2", label: "C2", zone: "Básico Yin", use: "Perna / membro inferior em linha.", x: 50, y: 58, view: "ynsa-lateral" },
-  { id: "S4", label: "S4", zone: "Sensorial", use: "Ouvido, zumbido.", x: 62, y: 48, view: "ynsa-lateral" },
-  { id: "Y-P", label: "Y-P", zone: "Ypsilon", use: "Canal Pulmão: tosse, asma, pele.", x: 44, y: 36, view: "ynsa-lateral" },
-  { id: "Y-IG", label: "Y-IG", zone: "Ypsilon", use: "Intestino Grosso: ombro, face, dentes.", x: 48, y: 32, view: "ynsa-lateral" },
-  { id: "Y-C", label: "Y-C", zone: "Ypsilon", use: "Coração: Shen, palpitação.", x: 40, y: 32, view: "ynsa-lateral" },
-  { id: "Y-E", label: "Y-E", zone: "Ypsilon", use: "Estômago: náusea, dor abdominal.", x: 50, y: 38, view: "ynsa-lateral" },
-  { id: "Y-BP", label: "Y-BP", zone: "Ypsilon", use: "Baço: umidade, fadiga, joelho.", x: 48, y: 44, view: "ynsa-lateral" },
-  { id: "Y-F", label: "Y-F", zone: "Ypsilon", use: "Fígado: Qi, TPM, irritação.", x: 52, y: 42, view: "ynsa-lateral" },
-  { id: "Y-VB", label: "Y-VB", zone: "Ypsilon", use: "Vesícula: têmpora, flanco, tendão.", x: 54, y: 36, view: "ynsa-lateral" },
-  { id: "Y-R", label: "Y-R", zone: "Ypsilon", use: "Rim: lombar, zumbido, Yin.", x: 46, y: 48, view: "ynsa-lateral" },
-  { id: "Y-B", label: "Y-B", zone: "Ypsilon", use: "Bexiga: lombar, ciática.", x: 50, y: 50, view: "ynsa-lateral" },
-  { id: "Y-TA", label: "Y-TA", zone: "Ypsilon", use: "Sanjiao: têmpora, ouvido, costela.", x: 42, y: 28, view: "ynsa-lateral" },
-  { id: "Ayang", label: "A Yang", zone: "Básico Yang · nuca", use: "Cervical posterior e nuca. Palpar o mais tenso.", x: 46, y: 44, view: "ynsa-occiput" },
-  { id: "Ayang2", label: "A Yang", zone: "Básico Yang · nuca", use: "Par contralateral.", x: 54, y: 44, view: "ynsa-occiput" },
-  { id: "M-oc", label: "M1", zone: "Cérebro", use: "Occipício / cérebro, tontura, vento interno (estudo).", x: 50, y: 36, view: "ynsa-occiput" },
+/** Percent coordinates on the 3:4 YNSA plates. */
+export const ynsaMap: AtlasMapPoint[] = [
+  Y("A", "A", "ynsa-front", 45, 40),
+  Y("B1", "B1", "ynsa-front", 34, 43),
+  Y("C1", "C1", "ynsa-front", 26, 49),
+  Y("C2", "C2", "ynsa-front", 23, 57),
+  Y("M1", "M1", "ynsa-front", 50, 33),
+  Y("S1", "S1", "ynsa-front", 42, 63),
+  Y("S2", "S2", "ynsa-front", 50, 67),
+  Y("S3", "S3", "ynsa-front", 49, 82),
+
+  Y("D", "D", "ynsa-lateral", 50, 53),
+  Y("S4", "S4", "ynsa-lateral", 62, 58),
+  Y("Y-C", "Y-C", "ynsa-lateral", 42, 37),
+  Y("Y-P", "Y-P", "ynsa-lateral", 37, 42),
+  Y("Y-IG", "Y-IG", "ynsa-lateral", 35, 48),
+  Y("Y-TA", "Y-TA", "ynsa-lateral", 47, 47),
+  Y("Y-ID", "Y-ID", "ynsa-lateral", 55, 41),
+  Y("Y-B", "Y-B", "ynsa-lateral", 61, 40),
+  Y("Y-E", "Y-E", "ynsa-lateral", 36, 54),
+  Y("Y-VB", "Y-VB", "ynsa-lateral", 53, 56),
+  Y("Y-BP", "Y-BP", "ynsa-lateral", 40, 59),
+  Y("Y-R", "Y-R", "ynsa-lateral", 58, 50),
+  Y("Y-F", "Y-F", "ynsa-lateral", 47, 61),
+
+  Y("A-yang", "A", "ynsa-occiput", 45, 64, "Básico Yang · nuca", "Cervical e cabeça. Ipsilateral à queixa motora."),
+  Y("B1-yang", "B1", "ynsa-occiput", 37, 58, "Básico Yang", "Ombro / torácico, face posterior."),
+  Y("C1-yang", "C1", "ynsa-occiput", 29, 55, "Básico Yang", "Membro superior, somatotopia posterior."),
+  Y("C2-yang", "C2", "ynsa-occiput", 31, 68, "Básico Yang", "Membro inferior, somatotopia posterior."),
+  Y("M1-post", "M1", "ynsa-occiput", 50, 40, "Cérebro posterior", "Cérebro / Shen. Palpação da nuca só como guia de estudo."),
 ];
