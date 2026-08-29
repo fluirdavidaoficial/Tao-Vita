@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <title>Tao Vita — Documentação do projeto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --surface: #fffdf8;
+      --fg: #2c241c;
+      --muted: #6b5d4e;
+      --subtle: #9a8b7a;
+      --primary: #8b3a2a;
+      --border: #e4d8c8;
+      --ink: #3a3128;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: Figtree, system-ui, sans-serif; line-height: 1.55; }
+    .page { max-width: 820px; margin: 0 auto; padding: 48px 32px 80px; }
+    h1, h2, h3 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; }
+    h1 { font-size: 42px; line-height: 1.05; margin: 0; }
+    h2 { font-size: 28px; margin: 40px 0 12px; color: var(--ink); }
+    h3 { font-size: 20px; margin: 22px 0 8px; }
+    p, li { color: var(--fg); }
+    .muted { color: var(--muted); }
+    .subtle { color: var(--subtle); font-size: 13px; }
+    .cover { background: var(--ink); color: #fff8f0; border-radius: 20px; padding: 40px 36px 32px; margin-bottom: 36px; }
+    .cover p { color: rgba(255,248,240,.78); }
+    .kicker { text-transform: uppercase; letter-spacing: .18em; font-size: 11px; margin: 0 0 10px; }
+    .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; margin-top: 24px; font-size: 14px; }
+    .card { background: var(--surface); border-radius: 14px; box-shadow: 0 0 0 1px rgb(44 36 28 / .06); padding: 18px 20px; margin: 14px 0; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--surface); border-radius: 12px; overflow: hidden; }
+    th, td { border-bottom: 1px solid var(--border); padding: 9px 10px; text-align: left; vertical-align: top; }
+    th { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; background: #faf6ef; }
+    code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; }
+    ul { padding-left: 1.15rem; }
+    .tag { display: inline-block; background: var(--primary); color: #fff8f0; border-radius: 999px; padding: 2px 10px; font-size: 12px; }
+    .warn { color: var(--primary); }
+    footer { margin-top: 48px; font-size: 12px; color: var(--subtle); text-align: center; }
+    @media print {
+      body { background: white; }
+      .page { padding: 0; max-width: none; }
+      .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      h2 { break-after: avoid; }
+      table, .card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <section class="cover">
+      <p class="kicker">Documentação do produto · v1.1</p>
+      <h1>Tao Vita</h1>
+      <p>Atlas de acupuntura em português: queixa → síndrome ramificada → corpo + orelha + YNSA + riscos + ficha da sessão.</p>
+      <div class="meta">
+        <div><strong>Produto</strong><br />Tao Vita — atlas clínico de estudo</div>
+        <div><strong>Idioma</strong><br />Português (Brasil)</div>
+        <div><strong>Data</strong><br />29 de agosto de 2026</div>
+        <div><strong>Repositório</strong><br />fluirdavidaoficial/Tao-Vita</div>
+        <div><strong>Público</strong><br />Acupunturistas e estudantes de MTC</div>
+        <div><strong>Persistência</strong><br />Somente neste aparelho (localStorage)</div>
+      </div>
+    </section>
+
+    <p class="warn"><strong>Aviso:</strong> o app apoia estudo e prática. Não substitui exame presencial, não diagnostica automaticamente e não usa as palavras cura, garante ou diagnóstico automático.</p>
+
+    <h2>1. Objetivo</h2>
+    <p>Transformar o consultório em um fluxo de 15 segundos: informar a queixa, ver síndromes ramificadas (não uma receita única), escolher pontos de corpo, orelha e YNSA, ler cautelas e exportar uma ficha de sessão para copiar.</p>
+
+    <h2>2. Escopo</h2>
+    <div class="card">
+      <h3>Cobre</h3>
+      <ul>
+        <li>Atlas dos 14 canais (Zang, Fu, VG e VC) — 361 pontos com foto.</li>
+        <li>38 protocolos de queixa de consultório brasileiro, cada um com 2 a 4 síndromes.</li>
+        <li>Consulta com ranking de compatibilidade (língua, saburra, pulso, fatores).</li>
+        <li>Diagnóstico de estudo: mapa de língua e posições Cun / Guan / Chi.</li>
+        <li>Auriculoterapia clicável ligada aos protocolos.</li>
+        <li>YNSA (Yamamoto) em três vistas: frente, lateral e nuca.</li>
+        <li>Oito vasos extraordinários e pontos extras.</li>
+        <li>Ficha da sessão (Markdown) copiável, salva só no aparelho.</li>
+        <li>Página Método: o que cobre, o que não cobre, revisão humana.</li>
+      </ul>
+      <h3>Não cobre (de propósito)</h3>
+      <ul>
+        <li>Agenda, prontuário em nuvem, financeiro, marketplace, comunidade, CRM.</li>
+        <li>Login obrigatório, multi-dispositivo, prescrição, emergência médica.</li>
+        <li>LLM solto inventando ponto ou evidência. Fontes sem fechamento aparecem como “a revisar”.</li>
+      </ul>
+    </div>
+
+    <h2>3. Mapa de navegação</h2>
+    <table>
+      <thead><tr><th>Rota</th><th>Tela</th><th>Função</th></tr></thead>
+      <tbody>
+        <tr><td class="mono">/</td><td>Atlas</td><td>Home, 8 queixas frequentes, grade Zang/Fu/Vasos, combinações clássicas</td></tr>
+        <tr><td class="mono">/protocolos</td><td>Protocolos</td><td>Busca e filtro por grupo clínico</td></tr>
+        <tr><td class="mono">/protocolo/:slug</td><td>Protocolo</td><td>Síndromes ramificadas, corpo, orelha, YNSA, cautela, fontes</td></tr>
+        <tr><td class="mono">/consulta</td><td>Consulta</td><td>Motor de diferenciação com % simples</td></tr>
+        <tr><td class="mono">/diagnostico</td><td>Diagnóstico</td><td>Língua e pulso clicáveis (estudo)</td></tr>
+        <tr><td class="mono">/orelha</td><td>Orelha</td><td>Mapa chinês tocável + protocolos ligados</td></tr>
+        <tr><td class="mono">/ynsa</td><td>Yamamoto</td><td>Básicos, Ypsilon, sensorial, cérebro</td></tr>
+        <tr><td class="mono">/vasos</td><td>Vasos</td><td>Du, Ren, Chong, Dai, Qiao, Wei + extras</td></tr>
+        <tr><td class="mono">/meridiano/:id</td><td>Meridiano</td><td>Lista dos pontos do canal com foto</td></tr>
+        <tr><td class="mono">/ponto/:code</td><td>Ponto</td><td>Ficha do ponto, foto, protocolos que o usam</td></tr>
+        <tr><td class="mono">/ficha</td><td>Ficha</td><td>Texto da sessão, copiar, memória local</td></tr>
+        <tr><td class="mono">/metodo</td><td>Método</td><td>Limites, nomenclatura WHO, revisão</td></tr>
+      </tbody>
+    </table>
+
+    <h2>4. Conteúdo clínico (inventário)</h2>
+    <table>
+      <thead><tr><th>Bloco</th><th>Quantidade</th><th>Observação</th></tr></thead>
+      <tbody>
+        <tr><td>Protocolos</td><td>38</td><td>Meta original: 40. Faltam 2 queixas “extra” para a próxima rodada.</td></tr>
+        <tr><td>Síndromes ramificadas</td><td>~55</td><td>Cada protocolo tem 2–4 padrões, não receita única.</td></tr>
+        <tr><td>Meridianos</td><td>14</td><td>6 Zang, 6 Fu, VG, VC. Nomenclatura WHO (LU, LI, ST…).</td></tr>
+        <tr><td>Pontos de corpo</td><td>361</td><td>Foto de atlas em cada ficha. Marcação visual a revisar ponto a ponto.</td></tr>
+        <tr><td>Vasos extraordinários</td><td>8</td><td>Du, Ren, Chong, Dai, Yin/Yang Qiao, Yin/Yang Wei.</td></tr>
+        <tr><td>Pontos extras</td><td>15</td><td>Yintang, Sishencong, Anmian, Taiyang, Dingchuan, Zigong etc.</td></tr>
+        <tr><td>Orelha</td><td>34 hotspots</td><td>Shenmen, Zang, articulações, NADA e pontos usados nos protocolos.</td></tr>
+        <tr><td>YNSA</td><td>A, B1, C1, C2, D, S1–S4, M1, Ypsilon</td><td>Três placas: frente, lateral, nuca. Lado ipsilateral à queixa motora (estudo).</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Protocolos por grupo</h3>
+    <table>
+      <thead><tr><th>Grupo</th><th>Queixas</th></tr></thead>
+      <tbody>
+        <tr><td>Dor</td><td>Lombalgia, cervicalgia, ciática, ombro, joelho, epicondilite, De Quervain, fascite, cervical com irradiação</td></tr>
+        <tr><td>Shen e sono</td><td>Insônia, ansiedade, depressão/opressão, palpitação</td></tr>
+        <tr><td>Digestão</td><td>Gastrite/refluxo, constipação, diarreia, distensão, náusea</td></tr>
+        <tr><td>Pulmão</td><td>Asma, rinite/sinusite, tosse crônica</td></tr>
+        <tr><td>Ginecologia</td><td>TPM/dismenorreia, ciclo irregular, fogachos, leucorreia</td></tr>
+        <tr><td>Qi e vazio</td><td>Fadiga, sudorese espontânea, edema</td></tr>
+        <tr><td>Cabeça e face</td><td>Enxaqueca, paralisia facial, tontura</td></tr>
+        <tr><td>Neurologia</td><td>Hemiparesia pós-AVC (apoio)</td></tr>
+        <tr><td>Pele</td><td>Eczema, urticária, herpes zoster</td></tr>
+        <tr><td>Extra</td><td>Zumbido, hipertensão (apoio), estresse/ombros</td></tr>
+      </tbody>
+    </table>
+
+    <h2>5. Fluxos principais</h2>
+    <h3>5.1 Consultório em 15 segundos</h3>
+    <ol>
+      <li>Home → atalho <em>Abrir consulta</em> ou uma das 8 queixas.</li>
+      <li>Consulta: escolher queixa, opcionalmente língua / saburra / pulso / fatores.</li>
+      <li><em>Diferenciar</em> gera ranking de 2–3 síndromes com % simples e o “por quê”.</li>
+      <li>Abrir protocolo completo ou gerar ficha da sessão.</li>
+    </ol>
+    <p>Linguagem da saída: “síndrome mais compatível com os dados informados”.</p>
+
+    <h3>5.2 Estudo no atlas</h3>
+    <ol>
+      <li>Escolher meridiano (ex.: Pulmão).</li>
+      <li>Abrir ponto (ex.: B23 Shenshu) com foto e protocolos que o citam.</li>
+      <li>Orelha e YNSA: toque no ponto → ficha + protocolos ligados.</li>
+    </ol>
+
+    <h3>5.3 Ficha da sessão</h3>
+    <p>Gera texto com data, queixa, síndrome, corpo, orelha, YNSA, cautelas e orientação simples. Cópia para WhatsApp. Persistida em <span class="mono">localStorage["tv-ficha"]</span> — não sobe para servidor.</p>
+
+    <h2>6. Modelo de um protocolo</h2>
+    <p>Cada síndrome contém: nome, mecanismo (1 linha), língua, pulso, 3–5 perguntas-chave, pontos de corpo (código + pinyin + por quê), orelha, YNSA, extras, o que não usar / cautela, técnica breve, selo (primário | apoio) e fontes (clássico / manual / a revisar).</p>
+    <p>Exemplo de ramificação obrigatória: lombalgia = Estagnação de Qi do Fígado + Rim xu <em>ou</em> Frio-Umidade no canal da Bexiga. Insônia = Coração-Rim, Fogo do Coração, Tan-Fogo ou Xue xu.</p>
+
+    <h2>7. Motor da consulta</h2>
+    <p>O ranking é determinístico (não é um chat). Parte de 22% e soma pesos se língua, pulso, saburra e fatores aparecem no texto da síndrome (Fígado/Qi, frio, umidade/Tan, Shen etc.). Teto 92%. Serve para ordenar hipóteses, não para cravar um diagnóstico.</p>
+
+    <h2>8. Arquitetura técnica</h2>
+    <table>
+      <thead><tr><th>Camada</th><th>Escolha</th></tr></thead>
+      <tbody>
+        <tr><td>UI</td><td>React 19 + TanStack Router / Start</td></tr>
+        <tr><td>Estilo</td><td>Tailwind v4, tokens de papel/terracota, Cormorant + Figtree</td></tr>
+        <tr><td>Conteúdo</td><td>Módulos TypeScript estáticos em <span class="mono">src/lib/tcm</span> e <span class="mono">src/lib/acupuncture</span></td></tr>
+        <tr><td>Auth / banco</td><td>Desligados. Sem conta, sem Postgres.</td></tr>
+        <tr><td>PWA</td><td>Manifesto e ícone de tela inicial injetados pela plataforma</td></tr>
+        <tr><td>Build</td><td>Vite + Nitro (preset Vercel)</td></tr>
+        <tr><td>Acessibilidade</td><td>Alvos ≥ 44px, foco visível, estados vazio/carregamento/404, reduced-motion</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Arquivos-chave</h3>
+    <ul>
+      <li><span class="mono">src/lib/tcm/protocols.ts</span> — 38 protocolos e síndromes.</li>
+      <li><span class="mono">src/lib/tcm/maps.ts</span> — coordenadas de orelha e YNSA.</li>
+      <li><span class="mono">src/components/atlas/clickable-map.tsx</span> — mapa tocável.</li>
+      <li><span class="mono">src/lib/consulta/engine.ts</span> — ranking.</li>
+      <li><span class="mono">src/lib/acupuncture/points.ts</span> — 361 pontos + foto.</li>
+      <li><span class="mono">src/components/layout/app-shell.tsx</span> — navegação persistente.</li>
+    </ul>
+
+    <h2>9. Identidade visual e UX</h2>
+    <ul>
+      <li>Papel quente (#f4efe6), tinta (#2c241c), terracota (#8b3a2a).</li>
+      <li>Chinês discreto nos títulos de protocolo e meridiano.</li>
+      <li>Animações curtas (fade-in da página, pill da nav, skeleton). Respeitam reduced-motion.</li>
+      <li>Estados vazios ilustrados (busca sem resultado, ficha vazia, 404, ponto/protocolo inexistente).</li>
+      <li>Rodapé em todas as telas: “Apoio ao estudo e à prática. Não substitui exame presencial.”</li>
+    </ul>
+
+    <h2>10. Requisitos não funcionais</h2>
+    <ul>
+      <li><strong>Mobile-first</strong> (390×844): navegação por polegar, sem overflow horizontal.</li>
+      <li><strong>Offline do conteúdo já carregado</strong> após o primeiro load (dados no bundle).</li>
+      <li><strong>Sem dados pessoais em servidor.</strong> Ficha e rascunho ficam no aparelho.</li>
+      <li><strong>Publicação:</strong> o build de produção precisa resolver o mapa clicável e as placas em <span class="mono">/images/maps/</span>.</li>
+    </ul>
+
+    <h2>11. Limitações conhecidas (próxima rodada)</h2>
+    <ul>
+      <li>Fichas profundas (ângulo, De Qi, contra-indicações por ponto) ainda não estão completas nos 361 — prioridade nos pontos de comando e nos já citados em protocolos.</li>
+      <li>Vídeo de localização: placeholder na ficha do ponto.</li>
+      <li>Dois protocolos a menos que a meta de 40.</li>
+      <li>PDFs de referência clínica ainda não cruzados ponto a ponto (página Método registra isso).</li>
+      <li>YNSA não examina; palpação de pescoço / abdômen / cotovelo é só guia de estudo.</li>
+    </ul>
+
+    <h2>12. Histórico</h2>
+    <table>
+      <thead><tr><th>Versão</th><th>Data</th><th>O que entrou</th></tr></thead>
+      <tbody>
+        <tr><td>1.0</td><td>ago/2026</td><td>Atlas, 38 protocolos, consulta, diagnóstico, orelha, YNSA, vasos, ficha.</td></tr>
+        <tr><td>1.0.1</td><td>29/08/2026</td><td>Polimento de movimento, estados vazios e de carregamento, UX.</td></tr>
+        <tr><td>1.1</td><td>29/08/2026</td><td>Correção do build: mapa clicável + placas do atlas. Homologação.</td></tr>
+      </tbody>
+    </table>
+
+    <footer>
+      Tao Vita · documentação funcional e técnica · 29/08/2026<br />
+      Apoio ao estudo e à prática. Não substitui exame presencial.
+    </footer>
+  </div>
+</body>
+</html>

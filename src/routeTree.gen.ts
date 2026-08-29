@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ConsultaRouteImport } from './routes/consulta'
 import { Route as DiagnosticoRouteImport } from './routes/diagnostico'
+import { Route as DocumentosRouteImport } from './routes/documentos'
 import { Route as FichaRouteImport } from './routes/ficha'
 import { Route as MetodoRouteImport } from './routes/metodo'
 import { Route as OrelhaRouteImport } from './routes/orelha'
@@ -35,6 +36,11 @@ const ConsultaRoute = ConsultaRouteImport.update({
 const DiagnosticoRoute = DiagnosticoRouteImport.update({
   id: '/diagnostico',
   path: '/diagnostico',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocumentosRoute = DocumentosRouteImport.update({
+  id: '/documentos',
+  path: '/documentos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FichaRoute = FichaRouteImport.update({
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/consulta': typeof ConsultaRoute
   '/diagnostico': typeof DiagnosticoRoute
+  '/documentos': typeof DocumentosRoute
   '/ficha': typeof FichaRoute
   '/metodo': typeof MetodoRoute
   '/orelha': typeof OrelhaRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/consulta': typeof ConsultaRoute
   '/diagnostico': typeof DiagnosticoRoute
+  '/documentos': typeof DocumentosRoute
   '/ficha': typeof FichaRoute
   '/metodo': typeof MetodoRoute
   '/orelha': typeof OrelhaRoute
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/consulta': typeof ConsultaRoute
   '/diagnostico': typeof DiagnosticoRoute
+  '/documentos': typeof DocumentosRoute
   '/ficha': typeof FichaRoute
   '/metodo': typeof MetodoRoute
   '/orelha': typeof OrelhaRoute
@@ -132,6 +141,7 @@ export interface FileRouteTypes {
     | '/'
     | '/consulta'
     | '/diagnostico'
+    | '/documentos'
     | '/ficha'
     | '/metodo'
     | '/orelha'
@@ -146,6 +156,7 @@ export interface FileRouteTypes {
     | '/'
     | '/consulta'
     | '/diagnostico'
+    | '/documentos'
     | '/ficha'
     | '/metodo'
     | '/orelha'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/'
     | '/consulta'
     | '/diagnostico'
+    | '/documentos'
     | '/ficha'
     | '/metodo'
     | '/orelha'
@@ -175,6 +187,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ConsultaRoute: typeof ConsultaRoute
   DiagnosticoRoute: typeof DiagnosticoRoute
+  DocumentosRoute: typeof DocumentosRoute
   FichaRoute: typeof FichaRoute
   MetodoRoute: typeof MetodoRoute
   OrelhaRoute: typeof OrelhaRoute
@@ -207,6 +220,13 @@ declare module '@tanstack/react-router' {
       path: '/diagnostico'
       fullPath: '/diagnostico'
       preLoaderRoute: typeof DiagnosticoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/documentos': {
+      id: '/documentos'
+      path: '/documentos'
+      fullPath: '/documentos'
+      preLoaderRoute: typeof DocumentosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ficha': {
@@ -279,6 +299,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ConsultaRoute: ConsultaRoute,
   DiagnosticoRoute: DiagnosticoRoute,
+  DocumentosRoute: DocumentosRoute,
   FichaRoute: FichaRoute,
   MetodoRoute: MetodoRoute,
   OrelhaRoute: OrelhaRoute,

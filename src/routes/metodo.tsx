@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/metodo")({ component: MetodoPage });
 
@@ -22,6 +23,11 @@ function MetodoPage() {
       <p className="mt-4 text-sm text-primary">
         Não usa as palavras cura, garante ou diagnóstico automático.
       </p>
+      <h2 className="mt-6 font-display text-xl">Documentos</h2>
+      <p className="text-sm text-muted">Documentação, homologação e prints para download.</p>
+      <Button asChild className="mt-3 w-full">
+        <Link to="/documentos">Abrir downloads</Link>
+      </Button>
     </>
   );
 }
