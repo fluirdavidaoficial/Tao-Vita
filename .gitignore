@@ -1,0 +1,72 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+.npm
+.node_modules.lock
+
+# Build / cache
+dist/
+build/
+out/
+.output/
+.vinxi/
+.nitro/
+.tanstack/
+.vite/
+.cache/
+*.tsbuildinfo
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.key
+
+# Logs and debug
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Tests / coverage
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+blob-report/
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Deploy / platform internals
+.vercel/
+.grok/
+.project_id
+
+# App Builder sandbox (not part of the product)
+artifacts/
+attachments/
+screenshots/
+public/__grok/
+AGENTS.md
+AGENTS.project.md
+startup.sh
+
+# Misc
+*.local
+.eslintcache
+.prettiercache

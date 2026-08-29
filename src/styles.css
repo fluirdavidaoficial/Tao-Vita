@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #f4efe6;
+  --color-surface: #fffdf8;
+  --color-fg: #2c241c;
+  --color-muted: #6b5d4e;
+  --color-subtle: #9a8b7a;
+  --color-primary: #8b3a2a;
+  --color-primary-fg: #fff8f0;
+  --color-border: #e4d8c8;
+  --color-ear: #5a3d2a;
+  --color-ynsa: #3d4a6b;
+  --color-ok: #3d6b4f;
+  --color-ink: #3a3128;
+  --font-sans: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --radius: 0.75rem;
+}
+
+@layer base {
+  html {
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+  body {
+    font-family: var(--font-sans);
+    line-height: 1.5;
+    min-height: 100dvh;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+.atlas-plate {
+  object-fit: cover;
+}
