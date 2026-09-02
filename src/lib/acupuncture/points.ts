@@ -1,11 +1,19 @@
+import { EXTRA_SPECS, POINT_SPECS } from "./specs";
+
 export type Point = {
   code: string;
   who: string;
   meridianId: string;
   number: number;
   pinyin: string;
-  photo: string;
+  photo?: string;
+  loc?: string;
+  use?: string;
+  cat?: string;
+  caut?: string;
+  extra?: boolean;
 };
+
 
 export const allPoints: Point[] = [
   { code: "P1", who: "LU1", meridianId: "pulmao", number: 1, pinyin: "Zhongfu", photo: "/images/points/P1.jpg" },
@@ -371,10 +379,49 @@ export const allPoints: Point[] = [
   { code: "VC24", who: "CV24", meridianId: "ren", number: 24, pinyin: "CV24", photo: "/images/points/VC24.jpg" },
 ];
 
+
+
+const WHO: Record<string, string> = {
+  LU: "P", LI: "IG", ST: "E", SP: "BP", HT: "C", SI: "ID", BL: "B", KI: "R",
+  PC: "CS", TE: "TA", SJ: "TA", GB: "VB", LR: "F", LV: "F", GV: "VG", CV: "VC", DU: "VG",
+};
+
+function merge(p: Point): Point {
+  const spec = POINT_SPECS[p.code];
+  if (!spec) return p;
+  return { ...p, pinyin: spec.py, loc: spec.loc, use: spec.use, cat: spec.cat, caut: spec.caut };
+}
+
 export function getPoint(code: string) {
-  const c = code.toUpperCase().replace(/\s+/g, '');
-  return allPoints.find((p) => p.code === c || p.who === c);
+  const c = code.trim();
+  const compact = c.toUpperCase().replace(/[\s\-]/g, "");
+  let p = allPoints.find((x) => x.code.toUpperCase() === compact || x.who.toUpperCase() === compact);
+  if (!p) {
+    const m = compact.match(/^([A-Z]+)(\d{1,2})$/);
+    if (m && WHO[m[1]]) {
+      const atlas = `${WHO[m[1]]}${Number(m[2])}`;
+      p = allPoints.find((x) => x.code === atlas);
+    }
+  }
+  if (p) return merge(p);
+  const extraKey = Object.keys(EXTRA_SPECS).find((k) => k.toLowerCase() === c.toLowerCase());
+  if (!extraKey) return;
+  const spec = EXTRA_SPECS[extraKey];
+  return {
+    code: extraKey,
+    who: extraKey,
+    meridianId: "extra",
+    number: 0,
+    pinyin: spec.py,
+    loc: spec.loc,
+    use: spec.use,
+    cat: spec.cat,
+    caut: spec.caut,
+    extra: true,
+  } satisfies Point;
 }
+
 export function getPointsByMeridian(id: string) {
-  return allPoints.filter((p) => p.meridianId === id);
+  return allPoints.filter((p) => p.meridianId === id).map(merge);
 }
+

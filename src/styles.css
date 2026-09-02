@@ -146,6 +146,10 @@
   transform: scale(0.96);
 }
 
+.map-label {
+  font-size: 0.625rem;
+}
+
 .nav-pill {
   transition:
     transform var(--motion-fast) var(--ease-smooth-out),
@@ -239,6 +243,13 @@
 }
 .stagger-list > *:nth-child(n + 7) {
   animation-delay: 280ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-enter > *,
+  .stagger-list > * {
+    animation: none;
+  }
 }
 
 .skeleton {

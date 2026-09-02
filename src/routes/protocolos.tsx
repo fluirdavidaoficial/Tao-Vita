@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Search, SearchX, X } from "lucide-react";
 import { useMemo, useState } from "react";
+import { BackLink } from "@/components/ui/back-link";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { protocols } from "@/lib/tcm/protocols";
@@ -18,6 +19,7 @@ function Protocolos() {
 
   return (
     <>
+      <BackLink to="/atlas" label="Atlas" />
       <h1 className="font-display text-3xl">Protocolos</h1>
       <p className="mt-1 text-sm text-muted">Queixa → 2 a 4 síndromes, não uma receita única.</p>
       <div className="relative mt-4">

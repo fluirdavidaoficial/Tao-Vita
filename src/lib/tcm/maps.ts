@@ -8,14 +8,80 @@ export type AtlasMapPoint = {
   use: string;
   loc?: string;
   view?: "ynsa-front" | "ynsa-lateral" | "ynsa-occiput";
+  group?: string;
 };
 
 /** Alias usado no repositório original. */
 export type MapPoint = AtlasMapPoint;
 
-
 const earMeta = Object.fromEntries(earPoints.map(([label, loc, use]) => [label, { loc, use }]));
 const ynMeta = Object.fromEntries(ynsaPoints.map(([label, loc, use]) => [label, { loc, use }]));
+
+const EAR_GROUP: Record<string, string> = {
+  Shenmen: "fossa",
+  Útero: "fossa",
+  Simpático: "antihelice",
+  Pulmão: "concha",
+  Fígado: "concha",
+  Rim: "concha",
+  Baço: "concha",
+  Coração: "concha",
+  Estômago: "concha",
+  IG: "concha",
+  "Intestino Grosso": "concha",
+  "San Jiao": "concha",
+  Pele: "concha",
+  Cardia: "concha",
+  Lombar: "antihelice",
+  Cervical: "antihelice",
+  Joelho: "antihelice",
+  Ciático: "antihelice",
+  Hipertensão: "antihelice",
+  "Sulco hipotensor": "antihelice",
+  Calcanhar: "antihelice",
+  Punho: "escafa",
+  Cotovelo: "escafa",
+  Ombro: "escafa",
+  Adrenal: "trago",
+  Pingchuan: "trago",
+  Nariz: "trago",
+  Endócrino: "trago",
+  Occipício: "trago",
+  Têmpora: "trago",
+  Cérebro: "trago",
+  Ouvido: "trago",
+  Face: "lobulo",
+  Bochecha: "lobulo",
+};
+
+const YNSA_GROUP: Record<string, string> = {
+  A: "basico",
+  B1: "basico",
+  C1: "basico",
+  C2: "basico",
+  D: "basico",
+  E: "basico",
+  F: "basico",
+  G: "basico",
+  H: "basico",
+  I: "basico",
+  S1: "sensorial",
+  S2: "sensorial",
+  S3: "sensorial",
+  S4: "sensorial",
+  M1: "cerebro",
+  "Y-P": "ypsilon",
+  "Y-IG": "ypsilon",
+  "Y-E": "ypsilon",
+  "Y-BP": "ypsilon",
+  "Y-C": "ypsilon",
+  "Y-ID": "ypsilon",
+  "Y-B": "ypsilon",
+  "Y-R": "ypsilon",
+  "Y-F": "ypsilon",
+  "Y-VB": "ypsilon",
+  "Y-TA": "ypsilon",
+};
 
 function E(label: string, x: number, y: number, loc?: string, use?: string): AtlasMapPoint {
   const meta = earMeta[label];
@@ -26,6 +92,7 @@ function E(label: string, x: number, y: number, loc?: string, use?: string): Atl
     y,
     loc: loc ?? meta?.loc,
     use: use ?? meta?.use ?? "Ponto de orelha usado nos protocolos.",
+    group: EAR_GROUP[label],
   };
 }
 
@@ -47,6 +114,7 @@ function Y(
     y,
     loc: loc ?? meta?.loc,
     use: use ?? meta?.use ?? "Ponto YNSA usado nos protocolos.",
+    group: YNSA_GROUP[label],
   };
 }
 
@@ -88,34 +156,55 @@ export const earMap: AtlasMapPoint[] = [
   E("Face", 64, 83),
 ];
 
-/** Percent coordinates on the 3:4 YNSA plates. */
+/** Percent on the unlabeled photo plates (hairline / temple / occiput — Yamamoto). */
 export const ynsaMap: AtlasMapPoint[] = [
-  Y("A", "A", "ynsa-front", 45, 40),
-  Y("B1", "B1", "ynsa-front", 34, 43),
-  Y("C1", "C1", "ynsa-front", 26, 49),
-  Y("C2", "C2", "ynsa-front", 23, 57),
-  Y("M1", "M1", "ynsa-front", 50, 33),
-  Y("S1", "S1", "ynsa-front", 42, 63),
-  Y("S2", "S2", "ynsa-front", 50, 67),
-  Y("S3", "S3", "ynsa-front", 49, 82),
+  Y("M1", "M1", "ynsa-front", 49, 26),
+  Y("A", "A", "ynsa-front", 46, 33),
+  Y("B1", "B1", "ynsa-front", 36, 34),
+  Y("C1", "C1", "ynsa-front", 26, 38),
+  Y("C2", "C2", "ynsa-front", 18, 43),
+  Y("S1", "S1", "ynsa-front", 47, 38),
+  Y("S2", "S2", "ynsa-front", 48, 43),
+  Y("S3", "S3", "ynsa-front", 49, 48),
 
-  Y("D", "D", "ynsa-lateral", 50, 53),
-  Y("S4", "S4", "ynsa-lateral", 62, 58),
-  Y("Y-C", "Y-C", "ynsa-lateral", 42, 37),
-  Y("Y-P", "Y-P", "ynsa-lateral", 37, 42),
-  Y("Y-IG", "Y-IG", "ynsa-lateral", 35, 48),
-  Y("Y-TA", "Y-TA", "ynsa-lateral", 47, 47),
-  Y("Y-ID", "Y-ID", "ynsa-lateral", 55, 41),
-  Y("Y-B", "Y-B", "ynsa-lateral", 61, 40),
-  Y("Y-E", "Y-E", "ynsa-lateral", 36, 54),
-  Y("Y-VB", "Y-VB", "ynsa-lateral", 53, 56),
-  Y("Y-BP", "Y-BP", "ynsa-lateral", 40, 59),
-  Y("Y-R", "Y-R", "ynsa-lateral", 58, 50),
-  Y("Y-F", "Y-F", "ynsa-lateral", 47, 61),
+  Y("Y-C", "Y-C", "ynsa-lateral", 46, 30),
+  Y("Y-P", "Y-P", "ynsa-lateral", 42, 34),
+  Y("Y-ID", "Y-ID", "ynsa-lateral", 54, 30),
+  Y("Y-B", "Y-B", "ynsa-lateral", 57, 34),
+  Y("Y-TA", "Y-TA", "ynsa-lateral", 49, 35),
+  Y("Y-IG", "Y-IG", "ynsa-lateral", 41, 38),
+  Y("Y-E", "Y-E", "ynsa-lateral", 44, 41),
+  Y("Y-R", "Y-R", "ynsa-lateral", 55, 38),
+  Y("Y-VB", "Y-VB", "ynsa-lateral", 52, 41),
+  Y("Y-BP", "Y-BP", "ynsa-lateral", 46, 44),
+  Y("Y-F", "Y-F", "ynsa-lateral", 50, 44),
+  Y("E", "E", "ynsa-lateral", 52, 48),
+  Y("D", "D", "ynsa-lateral", 56, 52),
+  Y("H", "H", "ynsa-lateral", 51, 55),
+  Y("F", "F", "ynsa-lateral", 59, 55),
+  Y("G", "G", "ynsa-lateral", 54, 59),
+  Y("I", "I", "ynsa-lateral", 58, 59),
+  Y("S4", "S4", "ynsa-lateral", 64, 38),
 
-  Y("A-yang", "A", "ynsa-occiput", 45, 64, "Básico Yang · nuca", "Cervical e cabeça. Ipsilateral à queixa motora."),
-  Y("B1-yang", "B1", "ynsa-occiput", 37, 58, "Básico Yang", "Ombro / torácico, face posterior."),
-  Y("C1-yang", "C1", "ynsa-occiput", 29, 55, "Básico Yang", "Membro superior, somatotopia posterior."),
-  Y("C2-yang", "C2", "ynsa-occiput", 31, 68, "Básico Yang", "Membro inferior, somatotopia posterior."),
-  Y("M1-post", "M1", "ynsa-occiput", 50, 40, "Cérebro posterior", "Cérebro / Shen. Palpação da nuca só como guia de estudo."),
+  Y(
+    "M1-post",
+    "M1",
+    "ynsa-occiput",
+    50,
+    16,
+    "Cérebro Yang · vértice",
+    "Cérebro / Shen. Palpação da nuca só como guia de estudo.",
+  ),
+  Y(
+    "A-yang",
+    "A",
+    "ynsa-occiput",
+    47,
+    44,
+    "Básico Yang · lambdóide",
+    "Cervical e cabeça, acima da lambdóide. Homolateral à queixa motora.",
+  ),
+  Y("B1-yang", "B1", "ynsa-occiput", 36, 42, "Básico Yang", "Ombro / torácico, face posterior."),
+  Y("C1-yang", "C1", "ynsa-occiput", 26, 44, "Básico Yang", "Membro superior, somatotopia posterior."),
+  Y("C2-yang", "C2", "ynsa-occiput", 20, 50, "Básico Yang", "Continuação de C na nuca (cotovelo / mão)."),
 ];

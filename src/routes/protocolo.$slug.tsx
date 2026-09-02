@@ -1,16 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { BookOpen } from "lucide-react";
+import { useEffect, useState } from "react";
+import { PointLink } from "@/components/atlas/point-link";
+import { SessionCard } from "@/components/session/session-card";
 import { BackLink } from "@/components/ui/back-link";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
-import { getPoint } from "@/lib/acupuncture/points";
 import { getProtocol } from "@/lib/tcm/protocols";
+import { cn } from "@/lib/utils";
+
 
 export const Route = createFileRoute("/protocolo/$slug")({ component: ProtocoloPage });
 
 function ProtocoloPage() {
   const { slug } = Route.useParams();
   const p = getProtocol(slug);
+  const [selected, setSelected] = useState(0);
+  useEffect(() => {
+    setSelected(0);
+  }, [slug]);
   if (!p) {
     return (
       <EmptyState
@@ -35,9 +43,22 @@ function ProtocoloPage() {
       <p className="mt-1 text-sm text-muted">
         Selo {top.selo} · {p.ss.length} síndromes
       </p>
+      <p className="mt-2 text-sm text-muted">
+        Escolha a síndrome e preencha a{" "}
+        <a href="#sessao" className="text-primary underline-offset-2 hover:underline">
+          ficha da sessão
+        </a>{" "}
+        para exportar em PDF.
+      </p>
 
       {p.ss.map((s, i) => (
-        <section key={s.nome} className="surface-card mt-5 p-4">
+        <section
+          key={s.nome}
+          className={cn(
+            "surface-card mt-5 p-4 transition-shadow duration-150",
+            i === selected && "ring-2 ring-primary/40",
+          )}
+        >
           <h2 className="font-display text-xl">
             {i + 1}. {s.nome}
           </h2>
@@ -54,41 +75,51 @@ function ProtocoloPage() {
           </ul>
           <h3 className="mt-3 text-xs uppercase tracking-widest text-muted">Corpo</h3>
           <div className="mt-1 flex flex-wrap gap-2">
-            {s.corpo.map(([code, name, why]) => {
-              const pt = getPoint(code);
-              const inner = (
-                <span className="inline-flex flex-col rounded-lg bg-fg px-3 py-2 text-primary-fg">
-                  <span className="text-sm font-medium">
-                    {code} {name}
-                  </span>
-                  <span className="text-xs text-primary-fg/70">{why}</span>
-                </span>
-              );
-              return pt ? (
-                <Link key={code} to="/ponto/$code" params={{ code: pt.code }}>
-                  {inner}
-                </Link>
-              ) : (
-                <span key={code}>{inner}</span>
-              );
-            })}
+            {s.corpo.map(([code, name, why]) => (
+              <PointLink key={code} code={code} note={`${name} · ${why}`} />
+            ))}
           </div>
           <h3 className="mt-3 text-xs uppercase tracking-widest text-muted">Orelha</h3>
-          <p className="text-sm">{s.ear.join(" · ")}</p>
+          <div className="mt-1 flex flex-wrap gap-2">
+            {s.ear.map((e) => (
+              <PointLink key={e} code={e} hint="ear" />
+            ))}
+          </div>
           <h3 className="mt-3 text-xs uppercase tracking-widest text-muted">YNSA</h3>
-          <p className="text-sm">{s.yn.join(" · ")}</p>
+          <div className="mt-1 flex flex-wrap gap-2">
+            {s.yn.map((y) => (
+              <PointLink key={y} code={y} hint="ynsa" />
+            ))}
+          </div>
           {s.ex.filter(Boolean).length > 0 ? (
             <>
               <h3 className="mt-3 text-xs uppercase tracking-widest text-muted">Extras</h3>
-              <p className="text-sm">{s.ex.filter(Boolean).join(" · ")}</p>
+              <div className="mt-1 flex flex-wrap gap-2">
+                {s.ex.filter(Boolean).map((e) => (
+                  <PointLink key={e} code={e.split(" ")[0]} note={e} />
+                ))}
+              </div>
             </>
           ) : null}
+
           <p className="mt-3 text-sm text-primary">{s.caut}</p>
           <p className="mt-1 text-xs text-ok">
             {s.tec} · Fontes: {s.fontes.join(", ")}
           </p>
+          <Button
+            className="mt-3 w-full"
+            variant={i === selected ? "primary" : "outline"}
+            onClick={() => {
+              setSelected(i);
+              document.getElementById("sessao")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+          >
+            {i === selected ? "Síndrome desta ficha" : "Usar nesta ficha"}
+          </Button>
         </section>
       ))}
+
+      <SessionCard protocol={p} selected={Math.min(selected, p.ss.length - 1)} onSelect={setSelected} />
     </>
   );
 }

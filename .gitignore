@@ -66,6 +66,13 @@ AGENTS.md
 AGENTS.project.md
 startup.sh
 
+# Heavy homologation binaries — HTML stays in public/docs
+public/docs/*.zip
+public/docs/Tao-Vita-galeria-telas.pdf
+public/docs/Tao-Vita-homologacao.pdf
+docs/*.zip
+docs/*.pdf
+
 # Misc
 *.local
 .eslintcache

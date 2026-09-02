@@ -1,9 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Check, Clipboard, ClipboardCopy, FileText } from "lucide-react";
+import { Check, Clipboard, ClipboardCopy, Download, FileText, Printer } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { BackLink } from "@/components/ui/back-link";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
+import { downloadSessionPdf, printSession } from "@/lib/session/pdf";
+import { loadPatientName, sheetToText, todayPt, type SessionSheet } from "@/lib/session/sheet";
 import { cn } from "@/lib/utils";
 
 type FichaSearch = {
@@ -27,18 +30,17 @@ export const Route = createFileRoute("/ficha")({
   component: FichaPage,
 });
 
-function buildFicha(search: FichaSearch) {
-  const today = new Date().toLocaleDateString("pt-BR");
-  return `TAO VITA — ficha de sessão
-Data: ${today}
-Queixa: ${search.q}
-Síndrome mais compatível (dados informados): ${search.s ?? "—"}
-Corpo: ${search.corpo ?? "—"}
-Orelha: ${search.ear ?? "—"}
-YNSA: ${search.yn ?? "—"}
-Cautelas: ${search.caut ?? "—"}
-Orientação: hidratação, evitar frio local se Bi-frio, retorno conforme evolução.
-Apoio educacional — não substitui avaliação presencial.`;
+function fromSearch(search: FichaSearch, patient: string): SessionSheet {
+  return {
+    patient: patient || "—",
+    date: todayPt(),
+    queixa: search.q ?? "—",
+    syndrome: search.s ?? "—",
+    corpo: search.corpo ?? "—",
+    ear: search.ear ?? "—",
+    yn: search.yn ?? "—",
+    caut: search.caut ?? "—",
+  };
 }
 
 function FichaPage() {
@@ -50,7 +52,7 @@ function FichaPage() {
 
   useEffect(() => {
     if (search.q) {
-      const next = buildFicha(search);
+      const next = sheetToText(fromSearch(search, loadPatientName()));
       setText(next);
       localStorage.setItem("tv-ficha", next);
     } else {
@@ -69,11 +71,33 @@ function FichaPage() {
     window.setTimeout(() => setCopied(false), 1800);
   }
 
+  function asSheet(): SessionSheet {
+    const lines = Object.fromEntries(
+      text.split("\n").map((line) => {
+        const i = line.indexOf(": ");
+        if (i < 0) return [line, ""];
+        return [line.slice(0, i), line.slice(i + 2)];
+      }),
+    );
+    return {
+      patient: lines.Paciente || loadPatientName() || "—",
+      date: lines.Data || todayPt(),
+      queixa: lines.Queixa || search.q || "—",
+      syndrome: lines["Síndrome mais compatível (dados informados)"] || search.s || "—",
+      corpo: lines.Corpo || search.corpo || "—",
+      ear: lines.Orelha || search.ear || "—",
+      yn: lines.YNSA || search.yn || "—",
+      caut: lines.Cautelas || search.caut || "—",
+      notes: lines.Notas,
+    };
+  }
+
   if (!ready) {
     return (
       <>
+        <BackLink to="/atlas" label="Atlas" />
         <h1 className="font-display text-3xl">Ficha da sessão</h1>
-        <p className="mt-1 text-sm text-muted">Copie para WhatsApp. Fica só neste aparelho.</p>
+        <p className="mt-1 text-sm text-muted">Copie ou exporte em PDF. Fica só neste aparelho.</p>
         <Skeleton className="mt-4 h-64 w-full rounded-xl" />
         <Skeleton className="mt-3 h-11 w-full rounded-xl" />
       </>
@@ -82,18 +106,19 @@ function FichaPage() {
 
   return (
     <>
+      <BackLink to="/atlas" label="Atlas" />
       <h1 className="font-display text-3xl">Ficha da sessão</h1>
-      <p className="mt-1 text-sm text-muted">Copie para WhatsApp. Fica só neste aparelho.</p>
+      <p className="mt-1 text-sm text-muted">Copie, imprima ou baixe em PDF. Fica só neste aparelho.</p>
 
       {!showEditor ? (
         <EmptyState
           icon={FileText}
           title="Nenhuma ficha ainda"
-          description="Gere pela Consulta a partir de uma queixa, ou escreva à mão neste aparelho."
+          description="Gere pelo protocolo (nome do paciente + queixa) ou pela Consulta."
           action={
             <div className="flex flex-col items-center gap-2 sm:flex-row">
               <Button asChild>
-                <Link to="/consulta">Abrir consulta</Link>
+                <Link to="/protocolos">Abrir protocolos</Link>
               </Button>
               <Button variant="outline" onClick={() => setManual(true)}>
                 Escrever à mão
@@ -111,7 +136,7 @@ function FichaPage() {
             }}
             rows={14}
             className="field mt-4 min-h-64 text-sm"
-            placeholder="Gere pela Consulta ou escreva a ficha aqui…"
+            placeholder="Gere pelo protocolo ou escreva a ficha aqui…"
           />
           <Button className="relative mt-3 w-full" onClick={() => void copy()} disabled={empty}>
             <span
@@ -132,6 +157,14 @@ function FichaPage() {
               {empty ? <Clipboard className="size-4" /> : <ClipboardCopy className="size-4" />}
               Copiar ficha
             </span>
+          </Button>
+          <Button className="mt-2 w-full" variant="outline" onClick={() => downloadSessionPdf(asSheet())} disabled={empty}>
+            <Download className="size-4" />
+            Exportar PDF
+          </Button>
+          <Button className="mt-2 w-full" variant="outline" onClick={() => printSession(asSheet())} disabled={empty}>
+            <Printer className="size-4" />
+            Imprimir
           </Button>
         </>
       )}

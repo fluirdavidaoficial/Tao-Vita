@@ -11,7 +11,7 @@ export function AppNotFound() {
       description="Esse caminho não existe no atlas. Volte ao início ou abra a consulta."
       action={
         <Button asChild>
-          <Link to="/">Ir ao atlas</Link>
+          <Link to="/inicio">Ir ao menu</Link>
         </Button>
       }
     />

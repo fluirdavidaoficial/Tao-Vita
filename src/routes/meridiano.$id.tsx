@@ -21,7 +21,7 @@ function MeridianPage() {
         description="Esse canal não está no atlas. Volte à lista dos 14 meridianos."
         action={
           <Button asChild>
-            <Link to="/">Ir ao atlas</Link>
+            <Link to="/atlas">Ir ao atlas</Link>
           </Button>
         }
       />
@@ -29,7 +29,7 @@ function MeridianPage() {
   }
   return (
     <>
-      <BackLink to="/" label="Atlas" />
+      <BackLink to="/atlas" label="Atlas" />
       <p className="text-xs uppercase tracking-widest text-muted">
         {m.who} · {m.element}
       </p>
@@ -52,13 +52,15 @@ function MeridianPage() {
                 params={{ code: p.code }}
                 className="flex min-h-16 items-center gap-3 px-3 py-2 transition-colors duration-150 hover:bg-bg/60"
               >
-                <AtlasImage src={p.photo} alt="" className="size-14 shrink-0 rounded-lg" />
+                <AtlasImage src={p.photo ?? ""} alt="" className="size-14 shrink-0 rounded-lg" />
                 <div>
                   <p className="font-medium">
                     {p.code} · {p.pinyin}
                   </p>
-                  <p className="text-xs text-subtle">{p.who}</p>
+                  <p className="text-xs text-subtle">{p.who}{p.loc ? ` · ${p.loc}` : ""}</p>
+                  {p.use ? <p className="text-xs text-muted">{p.use}</p> : null}
                 </div>
+
               </Link>
             </li>
           ))}

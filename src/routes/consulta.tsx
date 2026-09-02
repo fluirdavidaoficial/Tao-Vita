@@ -1,21 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Loader2, Stethoscope } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { PointLink } from "@/components/atlas/point-link";
+import { BackLink } from "@/components/ui/back-link";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { rankSyndromes } from "@/lib/consulta/engine";
+import { rankSyndromes, FATORES } from "@/lib/consulta/engine";
 import { protocols, type ProtocolSyndrome } from "@/lib/tcm/protocols";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/consulta")({ component: ConsultaPage });
 
-const FATORES = [
-  { id: "frio", label: "Frio" },
-  { id: "umidade", label: "Umidade" },
-  { id: "estresse", label: "Estresse" },
-  { id: "ciclo", label: "Ciclo" },
-  { id: "sono", label: "Sono" },
-] as const;
+export const Route = createFileRoute("/consulta")({ component: ConsultaPage });
 
 function ConsultaPage() {
   const [slug, setSlug] = useState(protocols[0]?.slug ?? "lombalgia");
@@ -62,10 +57,14 @@ function ConsultaPage() {
 
   return (
     <>
+      <BackLink to="/atlas" label="Atlas" />
       <h1 className="font-display text-3xl">Consulta</h1>
       <p className="mt-1 text-sm text-muted">
-        Síndrome mais compatível com os dados informados — não é diagnóstico automático.
+        Síndrome mais compatível com os dados informados. O app não examina — cruze com língua e pulso.
       </p>
+      <Link to="/diagnostico" className="mt-2 inline-flex text-sm text-primary">
+        Como olhar a língua e tomar o pulso
+      </Link>
 
       <label className="mt-4 block text-xs uppercase tracking-widest text-muted" htmlFor="queixa">
         Queixa
@@ -206,10 +205,19 @@ function ConsultaPage() {
                 <>
                   <p className="mt-2 text-xs uppercase tracking-widest text-muted">Perguntas que faltam</p>
                   <p className="text-sm">{r.s.qs.slice(0, 3).join(" · ")}</p>
-                  <p className="mt-2 text-sm">
-                    Corpo: {r.s.corpo.map((c) => c[0]).join(", ")} · Orelha: {r.s.ear.join(", ")} · YNSA:{" "}
-                    {r.s.yn.join(", ")}
-                  </p>
+                  <p className="mt-2 text-xs uppercase tracking-widest text-muted">Pontos</p>
+                  <div className="mt-1 flex flex-wrap gap-2">
+                    {r.s.corpo.map((c) => (
+                      <PointLink key={c[0]} code={c[0]} />
+                    ))}
+                    {r.s.ear.map((e) => (
+                      <PointLink key={e} code={e} hint="ear" />
+                    ))}
+                    {r.s.yn.map((y) => (
+                      <PointLink key={y} code={y} hint="ynsa" />
+                    ))}
+                  </div>
+
                   <p className="mt-2 text-sm text-primary">{r.s.caut}</p>
                   <Button asChild className="mt-3 w-full">
                     <Link to="/protocolo/$slug" params={{ slug: protocol.slug }}>

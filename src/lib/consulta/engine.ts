@@ -1,5 +1,13 @@
 import type { Protocol, ProtocolSyndrome } from "@/lib/tcm/protocols";
 
+export const FATORES = [
+  { id: "frio", label: "Frio" },
+  { id: "umidade", label: "Umidade" },
+  { id: "estresse", label: "Estresse" },
+  { id: "ciclo", label: "Ciclo" },
+  { id: "sono", label: "Sono" },
+] as const;
+
 export type ConsultaInput = {
   lingua: string;
   saburra: string;

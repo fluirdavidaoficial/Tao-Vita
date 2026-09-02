@@ -1,0 +1,12 @@
+# Keep the Vercel upload under the 100 MB output cap.
+attachments
+screenshots
+artifacts
+docs
+.grok
+.tanstack
+.vercel
+node_modules
+*.log
+AGENTS.md
+AGENTS.project.md

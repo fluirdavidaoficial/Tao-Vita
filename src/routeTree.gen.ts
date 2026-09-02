@@ -10,14 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AtlasRouteImport } from './routes/atlas'
 import { Route as ConsultaRouteImport } from './routes/consulta'
 import { Route as DiagnosticoRouteImport } from './routes/diagnostico'
 import { Route as DocumentosRouteImport } from './routes/documentos'
 import { Route as FichaRouteImport } from './routes/ficha'
+import { Route as InicioRouteImport } from './routes/inicio'
+import { Route as MassagemRouteImport } from './routes/massagem'
 import { Route as MetodoRouteImport } from './routes/metodo'
 import { Route as OrelhaRouteImport } from './routes/orelha'
 import { Route as ProtocolosRouteImport } from './routes/protocolos'
 import { Route as VasosRouteImport } from './routes/vasos'
+import { Route as VetRouteImport } from './routes/vet'
 import { Route as YnsaRouteImport } from './routes/ynsa'
 import { Route as MeridianoIdRouteImport } from './routes/meridiano.$id'
 import { Route as PontoCodeRouteImport } from './routes/ponto.$code'
@@ -26,6 +30,11 @@ import { Route as ProtocoloSlugRouteImport } from './routes/protocolo.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AtlasRoute = AtlasRouteImport.update({
+  id: '/atlas',
+  path: '/atlas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConsultaRoute = ConsultaRouteImport.update({
@@ -48,6 +57,16 @@ const FichaRoute = FichaRouteImport.update({
   path: '/ficha',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InicioRoute = InicioRouteImport.update({
+  id: '/inicio',
+  path: '/inicio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MassagemRoute = MassagemRouteImport.update({
+  id: '/massagem',
+  path: '/massagem',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MetodoRoute = MetodoRouteImport.update({
   id: '/metodo',
   path: '/metodo',
@@ -66,6 +85,11 @@ const ProtocolosRoute = ProtocolosRouteImport.update({
 const VasosRoute = VasosRouteImport.update({
   id: '/vasos',
   path: '/vasos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VetRoute = VetRouteImport.update({
+  id: '/vet',
+  path: '/vet',
   getParentRoute: () => rootRouteImport,
 } as any)
 const YnsaRoute = YnsaRouteImport.update({
@@ -91,14 +115,18 @@ const ProtocoloSlugRoute = ProtocoloSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/atlas': typeof AtlasRoute
   '/consulta': typeof ConsultaRoute
   '/diagnostico': typeof DiagnosticoRoute
   '/documentos': typeof DocumentosRoute
   '/ficha': typeof FichaRoute
+  '/inicio': typeof InicioRoute
+  '/massagem': typeof MassagemRoute
   '/metodo': typeof MetodoRoute
   '/orelha': typeof OrelhaRoute
   '/protocolos': typeof ProtocolosRoute
   '/vasos': typeof VasosRoute
+  '/vet': typeof VetRoute
   '/ynsa': typeof YnsaRoute
   '/meridiano/$id': typeof MeridianoIdRoute
   '/ponto/$code': typeof PontoCodeRoute
@@ -106,14 +134,18 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/atlas': typeof AtlasRoute
   '/consulta': typeof ConsultaRoute
   '/diagnostico': typeof DiagnosticoRoute
   '/documentos': typeof DocumentosRoute
   '/ficha': typeof FichaRoute
+  '/inicio': typeof InicioRoute
+  '/massagem': typeof MassagemRoute
   '/metodo': typeof MetodoRoute
   '/orelha': typeof OrelhaRoute
   '/protocolos': typeof ProtocolosRoute
   '/vasos': typeof VasosRoute
+  '/vet': typeof VetRoute
   '/ynsa': typeof YnsaRoute
   '/meridiano/$id': typeof MeridianoIdRoute
   '/ponto/$code': typeof PontoCodeRoute
@@ -122,14 +154,18 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/atlas': typeof AtlasRoute
   '/consulta': typeof ConsultaRoute
   '/diagnostico': typeof DiagnosticoRoute
   '/documentos': typeof DocumentosRoute
   '/ficha': typeof FichaRoute
+  '/inicio': typeof InicioRoute
+  '/massagem': typeof MassagemRoute
   '/metodo': typeof MetodoRoute
   '/orelha': typeof OrelhaRoute
   '/protocolos': typeof ProtocolosRoute
   '/vasos': typeof VasosRoute
+  '/vet': typeof VetRoute
   '/ynsa': typeof YnsaRoute
   '/meridiano/$id': typeof MeridianoIdRoute
   '/ponto/$code': typeof PontoCodeRoute
@@ -139,14 +175,18 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/atlas'
     | '/consulta'
     | '/diagnostico'
     | '/documentos'
     | '/ficha'
+    | '/inicio'
+    | '/massagem'
     | '/metodo'
     | '/orelha'
     | '/protocolos'
     | '/vasos'
+    | '/vet'
     | '/ynsa'
     | '/meridiano/$id'
     | '/ponto/$code'
@@ -154,14 +194,18 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/atlas'
     | '/consulta'
     | '/diagnostico'
     | '/documentos'
     | '/ficha'
+    | '/inicio'
+    | '/massagem'
     | '/metodo'
     | '/orelha'
     | '/protocolos'
     | '/vasos'
+    | '/vet'
     | '/ynsa'
     | '/meridiano/$id'
     | '/ponto/$code'
@@ -169,14 +213,18 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/atlas'
     | '/consulta'
     | '/diagnostico'
     | '/documentos'
     | '/ficha'
+    | '/inicio'
+    | '/massagem'
     | '/metodo'
     | '/orelha'
     | '/protocolos'
     | '/vasos'
+    | '/vet'
     | '/ynsa'
     | '/meridiano/$id'
     | '/ponto/$code'
@@ -185,14 +233,18 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AtlasRoute: typeof AtlasRoute
   ConsultaRoute: typeof ConsultaRoute
   DiagnosticoRoute: typeof DiagnosticoRoute
   DocumentosRoute: typeof DocumentosRoute
   FichaRoute: typeof FichaRoute
+  InicioRoute: typeof InicioRoute
+  MassagemRoute: typeof MassagemRoute
   MetodoRoute: typeof MetodoRoute
   OrelhaRoute: typeof OrelhaRoute
   ProtocolosRoute: typeof ProtocolosRoute
   VasosRoute: typeof VasosRoute
+  VetRoute: typeof VetRoute
   YnsaRoute: typeof YnsaRoute
   MeridianoIdRoute: typeof MeridianoIdRoute
   PontoCodeRoute: typeof PontoCodeRoute
@@ -206,6 +258,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/atlas': {
+      id: '/atlas'
+      path: '/atlas'
+      fullPath: '/atlas'
+      preLoaderRoute: typeof AtlasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/consulta': {
@@ -236,6 +295,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FichaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/inicio': {
+      id: '/inicio'
+      path: '/inicio'
+      fullPath: '/inicio'
+      preLoaderRoute: typeof InicioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/massagem': {
+      id: '/massagem'
+      path: '/massagem'
+      fullPath: '/massagem'
+      preLoaderRoute: typeof MassagemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/metodo': {
       id: '/metodo'
       path: '/metodo'
@@ -262,6 +335,13 @@ declare module '@tanstack/react-router' {
       path: '/vasos'
       fullPath: '/vasos'
       preLoaderRoute: typeof VasosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/vet': {
+      id: '/vet'
+      path: '/vet'
+      fullPath: '/vet'
+      preLoaderRoute: typeof VetRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ynsa': {
@@ -297,14 +377,18 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AtlasRoute: AtlasRoute,
   ConsultaRoute: ConsultaRoute,
   DiagnosticoRoute: DiagnosticoRoute,
   DocumentosRoute: DocumentosRoute,
   FichaRoute: FichaRoute,
+  InicioRoute: InicioRoute,
+  MassagemRoute: MassagemRoute,
   MetodoRoute: MetodoRoute,
   OrelhaRoute: OrelhaRoute,
   ProtocolosRoute: ProtocolosRoute,
   VasosRoute: VasosRoute,
+  VetRoute: VetRoute,
   YnsaRoute: YnsaRoute,
   MeridianoIdRoute: MeridianoIdRoute,
   PontoCodeRoute: PontoCodeRoute,
