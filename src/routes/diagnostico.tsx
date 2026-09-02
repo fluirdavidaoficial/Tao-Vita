@@ -1,15 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { ClickableMap } from "@/components/atlas/clickable-map";
+import { AtlasImage } from "@/components/ui/atlas-image";
 import { BackLink } from "@/components/ui/back-link";
+import type { AtlasMapPoint } from "@/lib/tcm/maps";
 import { cn } from "@/lib/utils";
 import {
   PULSE_IMAGES,
   PULSE_NORMAL,
   PULSE_POSITIONS,
   PULSE_STEPS,
+  TONGUE_FACTORS,
+  TONGUE_SIGN_GROUPS,
   TONGUE_SIGNS,
   TONGUE_STEPS,
   TONGUE_ZONES,
+  tonguePlate,
 } from "@/lib/tcm/exame";
 
 export const Route = createFileRoute("/diagnostico")({ component: DiagnosticoPage });
@@ -19,17 +25,37 @@ const TABS = [
   { id: "pulso" as const, label: "Pulso" },
 ];
 
+const TONGUE_MAP: AtlasMapPoint[] = TONGUE_ZONES.map((z) => ({
+  id: z.id,
+  label: z.label,
+  x: z.x,
+  y: z.y,
+  use: z.use,
+  loc: `${z.jiao} · ${z.organ}`,
+}));
+
 function DiagnosticoPage() {
   const [tab, setTab] = useState<(typeof TABS)[number]["id"]>("lingua");
-  const [zone, setZone] = useState<(typeof TONGUE_ZONES)[number]>(TONGUE_ZONES[0]);
   const [pulse, setPulse] = useState<(typeof PULSE_POSITIONS)[number]>(PULSE_POSITIONS[0]);
   const [sign, setSign] = useState<(typeof TONGUE_SIGNS)[number]>(TONGUE_SIGNS[0]);
   const [image, setImage] = useState<(typeof PULSE_IMAGES)[number]>(PULSE_IMAGES[0]);
   const [step, setStep] = useState(0);
+  const [grupo, setGrupo] = useState<(typeof TONGUE_SIGN_GROUPS)[number] | "Todos">("Todos");
 
   const pulseStepsOn = tab === "pulso";
   const method = pulseStepsOn ? PULSE_STEPS : TONGUE_STEPS;
   const methodStep = method[Math.min(step, method.length - 1)];
+
+  const signs = useMemo(
+    () => (grupo === "Todos" ? TONGUE_SIGNS : TONGUE_SIGNS.filter((s) => s.grupo === grupo)),
+    [grupo],
+  );
+
+  function pickGrupo(g: (typeof TONGUE_SIGN_GROUPS)[number] | "Todos") {
+    setGrupo(g);
+    const list = g === "Todos" ? TONGUE_SIGNS : TONGUE_SIGNS.filter((s) => s.grupo === g);
+    if (!list.some((s) => s.id === sign.id) && list[0]) setSign(list[0]);
+  }
 
   return (
     <>
@@ -81,65 +107,105 @@ function DiagnosticoPage() {
 
       {tab === "lingua" ? (
         <>
+          <h2 className="mt-8 font-display text-2xl">Cinco fatores</h2>
+          <p className="mt-1 text-sm text-muted">
+            As combinações são muitas; a leitura cabe nestes cinco. Placas originais de estudo, não
+            copiadas de atlas impresso.
+          </p>
+          <div className="mt-3 grid gap-2">
+            {TONGUE_FACTORS.map((f) => (
+              <article key={f.t} className="surface-card px-4 py-3">
+                <p className="text-xs uppercase tracking-widest text-muted">{f.t}</p>
+                <p className="mt-1 text-sm">{f.d}</p>
+              </article>
+            ))}
+          </div>
+
           <h2 className="mt-8 font-display text-2xl">Regiões</h2>
           <p className="mt-1 text-sm text-muted">
-            Ponta = jiao superior (Coração). Centro = Baço/Estômago. Lados = Fígado/VB. Raiz = Rim.
+            Ponta = Coração. Faixa seguinte = Pulmão. Centro = Baço/Estômago. Lados = Fígado/VB. Raiz
+            = Rim. Toque no mapa.
           </p>
-          <div className="relative mx-auto mt-3 max-w-xs">
-            <svg viewBox="0 0 100 110" className="w-full" aria-label="Mapa de regiões da língua">
-              <ellipse cx="50" cy="52" rx="32" ry="46" className="fill-surface stroke-border" strokeWidth="2" />
-              <path d="M32 28 Q50 8 68 28" className="fill-none stroke-border" strokeWidth="1.2" />
-              {TONGUE_ZONES.map((z) => (
-                <g key={z.id} onClick={() => setZone(z)} className="cursor-pointer">
-                  <circle
-                    cx={z.x}
-                    cy={z.y}
-                    r={zone.id === z.id ? 8 : 6}
-                    className={zone.id === z.id ? "fill-primary" : "fill-ear"}
-                  />
-                </g>
-              ))}
-            </svg>
+          <div className="mx-auto mt-3 max-w-sm">
+            <ClickableMap
+              src={tonguePlate("normal")}
+              alt="Língua vermelho-clara com saburra branca fina — mapa de regiões"
+              points={TONGUE_MAP}
+              tone="tongue"
+              aspect="1/1"
+              labeled={false}
+            />
           </div>
-          <article className="surface-card mt-2 p-4">
-            <p className="text-xs uppercase tracking-widest text-muted">
-              {zone.jiao} · {zone.organ}
-            </p>
-            <h3 className="font-display text-xl">{zone.label}</h3>
-            <p className="mt-1 text-sm">{zone.use}</p>
-          </article>
-          <div className="mt-2 flex flex-wrap gap-1">
-            {TONGUE_ZONES.filter((z, i, a) => a.findIndex((x) => x.label === z.label) === i).map((z) => (
+
+          <h2 className="mt-8 font-display text-2xl">Sinais</h2>
+          <p className="mt-1 text-sm text-muted">
+            Cor, forma, mobilidade, cor e qualidade da saburra. Toque a placa para ler.
+          </p>
+          <div className="mt-3 flex gap-1.5 overflow-x-auto pb-1">
+            <button
+              type="button"
+              onClick={() => pickGrupo("Todos")}
+              className={cn(
+                "chip shrink-0 px-3 text-xs",
+                grupo === "Todos" ? "bg-primary text-primary-fg" : "bg-border text-fg",
+              )}
+            >
+              Todos
+            </button>
+            {TONGUE_SIGN_GROUPS.map((g) => (
               <button
-                key={z.label}
+                key={g}
                 type="button"
-                onClick={() => setZone(z)}
-                className={cn("chip", zone.label === z.label ? "bg-primary text-primary-fg" : "bg-border text-fg")}
+                onClick={() => pickGrupo(g)}
+                className={cn(
+                  "chip shrink-0 px-3 text-xs",
+                  grupo === g ? "bg-primary text-primary-fg" : "bg-border text-fg",
+                )}
               >
-                {z.label}
+                {g}
               </button>
             ))}
           </div>
 
-          <h2 className="mt-8 font-display text-2xl">Sinais</h2>
-          <p className="mt-1 text-sm text-muted">Cor, forma, mobilidade e saburra. Toque para ler.</p>
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {TONGUE_SIGNS.map((s) => (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => setSign(s)}
-                className={cn("chip px-3 text-xs", sign.id === s.id ? "bg-primary text-primary-fg" : "bg-border text-fg")}
-              >
-                {s.t}
-              </button>
-            ))}
+          <div className="mt-4 overflow-hidden rounded-2xl bg-border/60 shadow-[var(--shadow-border)]">
+            <AtlasImage
+              src={tonguePlate(sign.img)}
+              alt={sign.t}
+              className="aspect-square w-full"
+              imgClassName="object-cover"
+            />
           </div>
           <article className="surface-card mt-3 p-4">
             <p className="text-xs uppercase tracking-widest text-muted">{sign.grupo}</p>
             <h3 className="font-display text-xl">{sign.t}</h3>
             <p className="mt-1 text-sm">{sign.d}</p>
           </article>
+
+          <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
+            {signs.map((s) => {
+              const on = s.id === sign.id;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => setSign(s)}
+                  aria-pressed={on}
+                  className={cn(
+                    "overflow-hidden rounded-2xl text-left shadow-[var(--shadow-border)] transition-[transform,box-shadow] duration-150 ease-out",
+                    on ? "ring-2 ring-primary" : "",
+                  )}
+                >
+                  <AtlasImage
+                    src={tonguePlate(s.img)}
+                    alt={s.t}
+                    className="aspect-square w-full"
+                    imgClassName="object-cover"
+                  />
+                  <span className="block truncate px-2 py-2 text-xs font-medium">{s.t}</span>
+                </button>
+              );
+            })}
+          </div>
         </>
       ) : (
         <>
@@ -243,10 +309,7 @@ function DiagnosticoPage() {
         </>
       )}
 
-      <Link
-        to="/consulta"
-        className="chip mt-8 flex w-full bg-fg text-primary-fg"
-      >
+      <Link to="/consulta" className="chip mt-8 flex w-full bg-fg text-primary-fg">
         Usar língua e pulso na Consulta
       </Link>
     </>

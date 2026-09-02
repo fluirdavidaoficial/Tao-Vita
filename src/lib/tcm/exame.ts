@@ -1,11 +1,38 @@
 /** Material de estudo original (paráfrase didática). Não reproduz texto de livro. */
 
+export function tonguePlate(img: string) {
+  return `/images/tongue/${img}.jpg`;
+}
+
+export const TONGUE_FACTORS = [
+  {
+    t: "Cor do corpo",
+    d: "Vermelho-clara é o esperado. Pálida, vermelha, vermelho-escura ou roxo-azulada mudam o quadro. A cor fala de Qi, Xue, calor, frio e estase.",
+  },
+  {
+    t: "Forma",
+    d: "Tamanho, marcas de dente, magreza, fissuras, papilas em espinho, manchas. Viçosa (mole, corpulenta) tende a vazio/frio; envelhecida (rígida, opaca) tende a plenitude/calor.",
+  },
+  {
+    t: "Aspecto / movimento",
+    d: "Ágil e viva. Rígida, mole, retraída, desviada, trêmula ou parética mudam a leitura — sobretudo de vento interno.",
+  },
+  {
+    t: "Cor da saburra",
+    d: "Branca (exterior/frio), amarela (interior/calor), cinza ou negra (interior mais grave). Amarelo-clara, escura ou queimada marcam a intensidade do calor.",
+  },
+  {
+    t: "Qualidade da saburra",
+    d: "Fina (vê-se o corpo) vs espessa; úmida vs seca/áspera; pegajosa vs deteriorada (queijo de soja); geográfica, espelho, desigual, verdadeira (com raiz) vs falsa (solta).",
+  },
+] as const;
+
 export const TONGUE_ZONES = [
   {
     id: "ponta",
     label: "Ponta",
     x: 50,
-    y: 18,
+    y: 24,
     organ: "Coração / Shen",
     jiao: "Jiao superior",
     use: "Ponta vermelha: Fogo do Coração ou calor no Shen. Pálida: Xue ou Qi em vazio. Pontos vermelhos: calor no Xue. Fala, sono e inquietação leem-se aqui.",
@@ -14,7 +41,7 @@ export const TONGUE_ZONES = [
     id: "pulmao",
     label: "Pulmão",
     x: 50,
-    y: 32,
+    y: 36,
     organ: "Pulmão",
     jiao: "Jiao superior",
     use: "Faixa entre a ponta e o centro. Saburra e cor falam de exterior, Qi do Pulmão e Wei. Branca fina no início de ataque externo; amarela quando o calor entra.",
@@ -26,31 +53,31 @@ export const TONGUE_ZONES = [
     y: 50,
     organ: "Estômago / Baço",
     jiao: "Jiao médio",
-    use: "A saburra nasce da evaporação do Qi do Estômago. Gordurosa: umidade-Tan. Amarela seca: calor no Yangming. Espelho / ausente: Yin do Estômago lesado. Língua é o broto do Coração e o reflexo do Baço.",
+    use: "A saburra nasce da evaporação do Qi do Estômago. Gordurosa: umidade-Tan. Amarela seca: calor no Yangming. Espelho / ausente: Yin do Estômago lesado. A língua é o broto do Coração e o reflexo do Baço.",
   },
   {
     id: "lados",
-    label: "Lados",
-    x: 22,
+    label: "Lado E",
+    x: 30,
     y: 48,
     organ: "Fígado / Vesícula",
     jiao: "Jiao médio",
-    use: "Bordos vermelhos ou tensos: Qi do Fígado estagnado ou Fogo. Roxo: estase de Xue. Inchados: umidade no Jueyin. Leia os dois lados — assimetria também conta.",
+    use: "Bordos vermelhos ou tensos: Qi do Fígado estagnado ou Fogo. Roxo: estase de Xue. Inchados: umidade no Jueyin. Compare os dois lados — assimetria também conta.",
   },
   {
     id: "lados2",
-    label: "Lados",
-    x: 78,
+    label: "Lado D",
+    x: 70,
     y: 48,
     organ: "Fígado / Vesícula",
     jiao: "Jiao médio",
-    use: "Mesmo campo do lado oposto. Compare cor, marcas e saburra entre esquerda e direita.",
+    use: "Mesmo campo do lado esquerdo. Compare cor, marcas e saburra entre esquerda e direita.",
   },
   {
     id: "raiz",
     label: "Raiz",
     x: 50,
-    y: 78,
+    y: 66,
     organ: "Rim / jiao inferior",
     jiao: "Jiao inferior",
     use: "Saburra suja ou amarela na raiz: umidade-calor no inferior (Bexiga, intestinos, útero). Sem saburra e seca: Yin do Rim. Veias sublinguais inchadas e escuras: estase.",
@@ -71,8 +98,12 @@ export const TONGUE_STEPS = [
     d: "Primeiro a saburra (há? espessa? pegajosa? cor? úmida ou seca?). Depois o corpo (cor, manchas, tamanho, marcas, movimento). Percorra da ponta à raiz. Por fim, com cuidado, as veias debaixo da língua.",
   },
   {
-    t: "Artefatos",
-    d: "Comida, chá, ferro e alguns fármacos tingem a saburra. Raspar a língua a afina. Gelado, picante ou respirar pela boca alteram umidade. Anote o que veio antes do exame.",
+    t: "Alimentação",
+    d: "Comida, chá, ferro e alguns fármacos tingem a saburra — falsa imagem. Raspar a língua a afina. Gelado, picante ou respirar pela boca alteram umidade. Anote o que veio antes do exame.",
+  },
+  {
+    t: "Estações",
+    d: "Mesmo em quem está bem, a saburra muda com o ano. Verão: mais espessa, às vezes amarelo-clara. Outono: fina e mais seca. Inverno: mais úmida. Não leia a estação como quadro.",
   },
   {
     t: "Quatro exames",
@@ -80,20 +111,135 @@ export const TONGUE_STEPS = [
   },
 ] as const;
 
+export const TONGUE_SIGN_GROUPS = ["Cor", "Forma", "Mobilidade", "Saburra", "Qualidade"] as const;
+
 export const TONGUE_SIGNS = [
-  { id: "normal", grupo: "Cor", t: "Vermelho-clara", d: "Cor viva, úmida, forma harmônica, movimento ágil. Saburra branca, fina e úmida. Também aparece no início de ataque externo leve." },
-  { id: "palida", grupo: "Cor", t: "Pálida", d: "Mais clara que o normal. Yang, Qi ou Xue em vazio; frio. Marcas de dente somam umidade ou Qi do Baço fraco." },
-  { id: "vermelha", grupo: "Cor", t: "Vermelha", d: "Calor. Pleno (com saburra) ou vazio de Yin (pouca saburra, seca). Ponta vermelha: Coração; lados: Fígado." },
-  { id: "carmesim", grupo: "Cor", t: "Vermelho-escura", d: "Calor no Ying/Xue ou Yin muito lesado. Quadro mais interior. Cruze com febre, sede e pulso." },
-  { id: "roxa", grupo: "Cor", t: "Roxo-azulada", d: "Estase de Xue. Roxo úmido e claro: frio que coagula. Roxo seco e escuro: calor que estagna Qi e Xue. Veja também o sublingual." },
-  { id: "inchada", grupo: "Forma", t: "Inchada / dentes", d: "Corpo largo com facetas dentárias: umidade, Tan ou Qi do Baço que não transforma. Pálida inchada: Yang xu com água." },
-  { id: "magra", grupo: "Forma", t: "Magra / fissurada", d: "Fina e seca: Yin ou Xue em vazio. Fissuras no centro: Estômago; por toda a língua: Yin dos Rins. Espelho: Yin grave." },
-  { id: "desvio", grupo: "Mobilidade", t: "Rígida / desvio / tremor", d: "Rígida ou desviada: vento interno. Mole, atrofiada: Qi/Xue em vazio. Trêmula: vento por vazio ou Yang que flutua." },
-  { id: "veias", grupo: "Forma", t: "Veias sublinguais", d: "Vire a língua só o suficiente. Veias inchadas, escuras e tortuosas: estase de Xue. Finas e claras: leitura mais vazia. Não force se a pessoa engasgar." },
-  { id: "branca", grupo: "Saburra", t: "Branca fina", d: "Exterior ou frio. Fina e úmida é esperada. Espessa e pegajosa: umidade-frio ou Tan." },
-  { id: "amarela", grupo: "Saburra", t: "Amarela", d: "Calor. Quanto mais seca e escura, mais o calor lesa os fluidos. Amarela gordurosa: umidade-calor." },
-  { id: "gordurosa", grupo: "Saburra", t: "Gordurosa / pegajosa", d: "Umidade e Tan. O Qi do Estômago evapora mal. Centro ou raiz sujos: jiao médio ou inferior." },
-  { id: "espelho", grupo: "Saburra", t: "Ausente / espelho", d: "Yin e fluidos lesados. Saburra que some em ilhas (geográfica) também fala de Qi do Estômago instável." },
+  {
+    id: "normal",
+    grupo: "Cor",
+    t: "Vermelho-clara",
+    img: "normal",
+    d: "Cor viva, úmida, forma harmônica, movimento ágil. Saburra branca, fina e úmida — nem escorregadia nem seca. Também aparece no início de ataque externo leve. É o padrão contra o qual se lê o resto.",
+  },
+  {
+    id: "palida",
+    grupo: "Cor",
+    t: "Pálida",
+    img: "pale-teeth",
+    d: "Mais clara que o esperado. Yang, Qi ou Xue em vazio; frio. Com marcas de dente e umidade: Qi do Baço que não transforma. Magra e pálida: Xue em vazio.",
+  },
+  {
+    id: "vermelha",
+    grupo: "Cor",
+    t: "Vermelha",
+    img: "red",
+    d: "Mais escura que o normal: calor. Pleno (com saburra) ou vazio de Yin (pouca saburra, seca). Ponta vermelha: Coração; lados: Fígado. Cruze com sede, pulso e o resto do exame.",
+  },
+  {
+    id: "carmesim",
+    grupo: "Cor",
+    t: "Vermelho-escura",
+    img: "deep-red",
+    d: "Calor no Ying/Xue ou Yin muito lesado. Quadro mais interior. Pouca saburra e seca reforçam consumo de fluidos. Cruze com febre, sede e pulso — a língua sozinha não fecha o caso.",
+  },
+  {
+    id: "roxa",
+    grupo: "Cor",
+    t: "Roxo-azulada",
+    img: "purple",
+    d: "Estase de Xue. Roxo úmido e claro: frio que coagula. Roxo seco e escuro: calor que estagna Qi e Xue. Manchas e veias sublinguais escuras somam o mesmo eixo.",
+  },
+  {
+    id: "inchada",
+    grupo: "Forma",
+    t: "Inchada / dentes",
+    img: "pale-teeth",
+    d: "Corpo largo que marca os dentes (roda dentada): umidade, Tan ou Qi do Baço fraco. Pálida inchada e muito úmida: Yang xu com água. Vermelho-escura inchada: calor no Coração/Baço.",
+  },
+  {
+    id: "magra",
+    grupo: "Forma",
+    t: "Magra",
+    img: "pale-thin",
+    d: "Corpo pequeno e fino. Pálida: Qi e Xue em vazio. Vermelho-escura: Yin xu com fogo. Seca e atrofiada: fluidos e Yin no limite. Distinga da fissurada — aqui o volume some.",
+  },
+  {
+    id: "fissurada",
+    grupo: "Forma",
+    t: "Fissurada",
+    img: "cracked",
+    d: "Sulcos na superfície. Centro: Estômago. Por toda a língua: Yin dos Rins e fluidos. Vermelho-escura: calor que consome Yin. Pálida e fina: Xue em vazio. Fissura antiga sem outros sinais pode ser variação.",
+  },
+  {
+    id: "espinhosa",
+    grupo: "Forma",
+    t: "Espinhosa / morango",
+    img: "prickles",
+    d: "Papilas hipertrofiadas, ásperas ao toque: calor perverso em hiperatividade. Pontos estrelados na metade anterior (língua de morango): calor no Xue. Ponta vermelha com pontinhos: Fogo do Coração.",
+  },
+  {
+    id: "veias",
+    grupo: "Forma",
+    t: "Veias sublinguais",
+    img: "sublingual",
+    d: "Vire a língua só o suficiente. Veias inchadas, azul-violeta e tortuosas: estase de Xue. Finas e claras: leitura mais vazia. Não force se a pessoa engasgar.",
+  },
+  {
+    id: "desvio",
+    grupo: "Mobilidade",
+    t: "Desvio / rígida / tremor",
+    img: "deviation",
+    d: "Desvio para um lado: vento interno. Rígida, difícil de falar: calor no Pericárdio, Tan que obstrui ou prenúncio de vento. Mole e atrofiada: Qi/Xue ou Yin no fundo. Trêmula: vento por calor ou por vazio. Retração é sinal grave.",
+  },
+  {
+    id: "branca",
+    grupo: "Saburra",
+    t: "Branca",
+    img: "white-greasy",
+    d: "Em geral exterior ou frio. Fina e úmida é esperada. Espessa e pegajosa (como na placa): umidade-frio ou Tan. Branca que vira amarela: o xie interioriza e gera calor.",
+  },
+  {
+    id: "amarela",
+    grupo: "Saburra",
+    t: "Amarela",
+    img: "yellow-greasy",
+    d: "Interior e calor (Yangming / Qi). Clara: calor leve. Escura ou queimada: calor mais forte. Amarela gordurosa: umidade-calor. Seca: fluidos lesionados. Também pode aparecer quando o Yang não transforma a umidade.",
+  },
+  {
+    id: "negra",
+    grupo: "Saburra",
+    t: "Cinza / negra",
+    img: "black",
+    d: "Em geral evolução de amarela queimada ou cinza. Seca e negra: calor extremo que seca os fluidos. Úmida e negra: frio por Yang xu. Verde ou marrom-escuro leem-se no mesmo eixo. Cruze sempre com o pulso — a mesma cor serve a calor ou a frio.",
+  },
+  {
+    id: "gordurosa",
+    grupo: "Qualidade",
+    t: "Pegajosa / deteriorada",
+    img: "white-greasy",
+    d: "Pegajosa: grânulos miúdos, suja, difícil de limpar — umidade-Tan, alimento parado, Qi do Estômago que evapora mal. Deteriorada (queijo de soja, solta): calor Yang com turvação. Distinga: pegajosa adere; deteriorada desprende.",
+  },
+  {
+    id: "geografica",
+    grupo: "Qualidade",
+    t: "Geográfica",
+    img: "geographic",
+    d: "Ilhas de saburra que somem, com borda em mapa. Qi e Yin do Estômago instáveis, ou Qi/Xue em vazio. A 'flor' (clareiras brilhantes sem mapa) também fala de Qi do Estômago. Não é o espelho — ainda há saburra ao redor.",
+  },
+  {
+    id: "espelho",
+    grupo: "Qualidade",
+    t: "Espelho / lisa",
+    img: "mirror",
+    d: "Saburra sumiu por completo: superfície lisa, brilhante, escorregadia. Yin e Qi do Baço-Estômago no limite; fluidos secos. Semi-descamada (granulação nova no claro) é um passo antes. Leitura reservada — cruze com pulso e queixa.",
+  },
+  {
+    id: "desigual",
+    grupo: "Qualidade",
+    t: "Desigual (ponta / raiz)",
+    img: "root-yellow",
+    d: "Saburra que não cobre por igual. Branca na ponta e amarela na raiz: xie que interioriza, ou Tan ainda no jiao inferior. Só na raiz: interior residual. Nos dois lados: Fígado/VB. Em toda a língua: umidade no jiao médio. Verdadeira adere (tem raiz); falsa solta ao limpar.",
+  },
 ] as const;
 
 export const PULSE_POSITIONS = [
@@ -208,7 +354,7 @@ export const EAR_REGIONS = [
 export const SOURCES = [
   { t: "Mai Jing · Wang Shu-he", d: "Clássico do pulso: Cun Kou, Cun/Guan/Chi, três pressões e as imagens do pulso. Base da tela Diagnóstico · Pulso." },
   { t: "Auteroche · exame clínico", d: "Ordem prática de olhar a língua e tomar o pulso (luz, postura, mãos, tempo). Paráfrase didática — o app não reproduz o livro." },
-  { t: "Son Tian Pin · semiologia da língua", d: "Regiões (ponta, centro, lados, raiz), cor, forma, saburra e veias sublinguais. Atlas de estudo, não atlas fotográfico copiado." },
+  { t: "Son Tian Pin · Atlas de Semiologia da Língua", d: "Instituto de Medicina Tradicional Chinesa da Beijing (Roca, 1994; original 舌苔図譜). Método, cinco fatores (cor, forma, aspecto, cor e qualidade da saburra) e regiões. Placas do app são originais de estudo — o atlas impresso não foi copiado." },
   { t: "Yamamoto · Nova Craniopuntura", d: "Quatro grupos (básicos, sensoriais, cérebro, Ypsilon), Yin na frente e Yang na nuca. A–C na linha do cabelo; S1–S3 descem a fronte; Ypsilon na têmpora; D–I na costeleta; J/K só no texto (pé, sem placa)." },
   { t: "Schoen / Xie · vet", d: "Transposição dos 14 canais no cão, gato e cavalo, mais Shan-gen, Er-jian, Wei-jian e Bai-hui. Prenhez: não IG4, BP6, B60, B67, VB21. O app não examina." },
   { t: "Atlas auricular A–Z", d: "Feto invertido, regiões do pavilhão, Shenmen primeiro, NADA e lado (escola chinesa vs. brasileira). Pontos extra só entram se já tinham coordenada na placa." },
