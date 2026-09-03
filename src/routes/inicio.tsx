@@ -43,8 +43,8 @@ function Inicio() {
           to="/massagem"
           icon={Hand}
           title="Massagem e pontos-gatilho"
-          d="Em aberto — ainda sem mapa."
-          soon
+          d="Mapa muscular, dor referida e vídeo do local."
+          search
         />
       </nav>
 

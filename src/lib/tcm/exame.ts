@@ -357,5 +357,6 @@ export const SOURCES = [
   { t: "Son Tian Pin · Atlas de Semiologia da Língua", d: "Instituto de Medicina Tradicional Chinesa da Beijing (Roca, 1994; original 舌苔図譜). Método, cinco fatores (cor, forma, aspecto, cor e qualidade da saburra) e regiões. Placas do app são originais de estudo — o atlas impresso não foi copiado." },
   { t: "Yamamoto · Nova Craniopuntura", d: "Quatro grupos (básicos, sensoriais, cérebro, Ypsilon), Yin na frente e Yang na nuca. A–C na linha do cabelo; S1–S3 descem a fronte; Ypsilon na têmpora; D–I na costeleta; J/K só no texto (pé, sem placa)." },
   { t: "Schoen / Xie · vet", d: "Transposição dos 14 canais no cão, gato e cavalo, mais Shan-gen, Er-jian, Wei-jian e Bai-hui. Prenhez: não IG4, BP6, B60, B67, VB21. O app não examina." },
+  { t: "Mapa de pontos gatilho", d: "Padrões musculares de Travell e Simons (material de estudo tipo Salib). Lombar, tórax, cervical, coxa, perna, ombro e mão. Placas originais — o folheto não foi copiado. Vídeo do local fica reservado." },
   { t: "Atlas auricular A–Z", d: "Feto invertido, regiões do pavilhão, Shenmen primeiro, NADA e lado (escola chinesa vs. brasileira). Pontos extra só entram se já tinham coordenada na placa." },
 ] as const;

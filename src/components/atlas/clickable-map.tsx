@@ -4,7 +4,8 @@ import { AtlasImage } from "@/components/ui/atlas-image";
 import type { AtlasMapPoint } from "@/lib/tcm/maps";
 import { cn } from "@/lib/utils";
 
-function groupFill(tone: "ear" | "ynsa" | "vet" | "tongue", group?: string) {
+function groupFill(tone: "ear" | "ynsa" | "vet" | "tongue" | "trigger", group?: string) {
+  if (tone === "trigger") return "bg-primary";
   if (tone === "tongue") return "bg-primary";
   if (tone === "ear") return "bg-ear";
   if (tone === "vet") return "bg-ok";
@@ -30,7 +31,7 @@ export function ClickableMap({
   src?: string;
   alt: string;
   points: AtlasMapPoint[];
-  tone: "ear" | "ynsa" | "vet" | "tongue";
+  tone: "ear" | "ynsa" | "vet" | "tongue" | "trigger";
   linked?: (label: string) => { slug: string; t: string }[];
   initialId?: string;
   aspect?: "3/4" | "3/2" | "2/3" | "1/1";
@@ -137,7 +138,16 @@ export function ClickableMap({
       {sel ? (
         <article className="surface-card mt-3 p-4">
           <p className="text-xs uppercase tracking-widest text-muted">
-            {sel.loc ?? (tone === "ear" ? "Orelha" : tone === "vet" ? "Veterinária" : tone === "tongue" ? "Língua" : "YNSA")}
+            {sel.loc ??
+              (tone === "ear"
+                ? "Orelha"
+                : tone === "vet"
+                  ? "Veterinária"
+                  : tone === "tongue"
+                    ? "Língua"
+                    : tone === "trigger"
+                      ? "Gatilho"
+                      : "YNSA")}
           </p>
           <h2 className="font-display text-2xl">{sel.label}</h2>
           <p className="mt-1 text-sm">{sel.use}</p>

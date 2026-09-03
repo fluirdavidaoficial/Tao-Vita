@@ -126,7 +126,7 @@ function DiagnosticoPage() {
             Ponta = Coração. Faixa seguinte = Pulmão. Centro = Baço/Estômago. Lados = Fígado/VB. Raiz
             = Rim. Toque no mapa.
           </p>
-          <div className="mx-auto mt-3 max-w-sm">
+          <div className="mt-3 w-full">
             <ClickableMap
               src={tonguePlate("normal")}
               alt="Língua vermelho-clara com saburra branca fina — mapa de regiões"
@@ -181,7 +181,7 @@ function DiagnosticoPage() {
             <p className="mt-1 text-sm">{sign.d}</p>
           </article>
 
-          <div className="mt-3 grid grid-cols-3 gap-2 sm:grid-cols-4">
+          <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
             {signs.map((s) => {
               const on = s.id === sign.id;
               return (
@@ -214,7 +214,7 @@ function DiagnosticoPage() {
             Correspondência do Mai Jing (Wang Shu-he): Cun = alto, Guan = meio, Chi = baixo. Toque no
             posto.
           </p>
-          <div className="relative mx-auto mt-3 max-w-sm">
+          <div className="relative mt-3 w-full">
             <svg viewBox="0 0 100 100" className="w-full" aria-label="Postos do pulso radial">
               <rect x="8" y="20" width="28" height="64" rx="10" className="fill-surface stroke-border" strokeWidth="2" />
               <rect x="64" y="20" width="28" height="64" rx="10" className="fill-surface stroke-border" strokeWidth="2" />

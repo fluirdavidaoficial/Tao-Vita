@@ -12,9 +12,9 @@ function MetodoPage() {
       <h1 className="font-display text-3xl">Método</h1>
       <p className="mt-3">
         O Tao Vita é atlas de estudo: 14 canais, 361 pontos com localização e uso, 38 protocolos
-        ramificados, orelha e YNSA clicáveis, acupuntura veterinária, língua, pulso e os oito vasos
-        extraordinários. Ranking da Consulta é determinístico — síndrome mais compatível com os dados
-        informados. O app não examina.
+        ramificados, orelha e YNSA clicáveis, acupuntura veterinária, língua, pulso, pontos-gatilho e os
+        oito vasos extraordinários. Ranking da Consulta é determinístico — síndrome mais compatível com
+        os dados informados. O app não examina.
       </p>
 
       <h2 className="mt-8 font-display text-2xl">Fontes de estudo</h2>
