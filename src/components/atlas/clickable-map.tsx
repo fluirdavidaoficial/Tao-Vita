@@ -34,7 +34,7 @@ export function ClickableMap({
   tone: "ear" | "ynsa" | "vet" | "tongue" | "trigger";
   linked?: (label: string) => { slug: string; t: string }[];
   initialId?: string;
-  aspect?: "3/4" | "3/2" | "2/3" | "1/1";
+  aspect?: string;
   labeled?: boolean;
   background?: ReactNode;
   onSelect?: (p: AtlasMapPoint) => void;
@@ -61,22 +61,14 @@ export function ClickableMap({
 
   return (
     <div>
-      <div className="relative overflow-hidden rounded-2xl bg-border/60 shadow-[var(--shadow-border)]">
+      <div className="relative w-full overflow-hidden rounded-2xl bg-border/60 shadow-[var(--shadow-border)]">
         {background ??
           (src ? (
             <AtlasImage
               src={src}
               alt={alt}
-              className={cn(
-                "w-full",
-                aspect === "1/1"
-                  ? "aspect-square"
-                  : aspect === "3/2"
-                    ? "aspect-[3/2]"
-                    : aspect === "2/3"
-                      ? "aspect-[2/3]"
-                      : "aspect-[3/4]",
-              )}
+              className="w-full"
+              style={{ aspectRatio: aspect.replace("/", " / ") }}
               imgClassName="object-cover"
             />
           ) : null)}
