@@ -7,6 +7,7 @@ export function AppNotFound() {
   return (
     <EmptyState
       icon={Compass}
+      titleAs="h1"
       title="Página não encontrada"
       description="Esse caminho não existe no atlas. Volte ao início ou abra a consulta."
       action={

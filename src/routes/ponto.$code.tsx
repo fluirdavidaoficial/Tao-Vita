@@ -19,6 +19,7 @@ function PontoPage() {
     return (
       <EmptyState
         icon={MapPin}
+        titleAs="h1"
         title="Ponto não encontrado"
         description="Esse código não está no atlas de 361 pontos nem nos extras."
         action={
@@ -51,7 +52,8 @@ function PontoPage() {
         {p.cat ? ` · ${p.cat}` : ""}
       </p>
       <h1 className="font-display text-3xl">
-        {p.code} · {p.pinyin}
+        {p.code}
+        {p.pinyin && p.pinyin !== p.code ? ` · ${p.pinyin}` : ""}
       </h1>
 
       {p.photo ? (

@@ -17,6 +17,7 @@ function MeridianPage() {
     return (
       <EmptyState
         icon={MapPin}
+        titleAs="h1"
         title="Meridiano não encontrado"
         description="Esse canal não está no atlas. Volte à lista dos 14 meridianos."
         action={

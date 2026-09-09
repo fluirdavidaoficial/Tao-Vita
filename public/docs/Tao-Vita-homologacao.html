@@ -7,15 +7,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #f4efe6;
-      --surface: #fffdf8;
-      --fg: #2c241c;
-      --muted: #6b5d4e;
-      --subtle: #9a8b7a;
-      --primary: #8b3a2a;
-      --ok: #3d6b4f;
-      --border: #e4d8c8;
-      --ink: #3a3128;
+      --bg: #f4efe6; --surface: #fffdf8; --fg: #2c241c; --muted: #6b5d4e;
+      --subtle: #9a8b7a; --primary: #8b3a2a; --ok: #3d6b4f; --border: #e4d8c8; --ink: #3a3128;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); font-family: Figtree, system-ui, sans-serif; line-height: 1.5; }
@@ -32,6 +25,7 @@
     th, td { border-bottom: 1px solid var(--border); padding: 8px 8px; text-align: left; vertical-align: top; }
     th { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); background: #faf6ef; }
     .ok { color: var(--ok); font-weight: 600; }
+    .warn { color: var(--primary); font-weight: 600; }
     .case { background: var(--surface); border-radius: 14px; box-shadow: 0 0 0 1px rgb(44 36 28 / .06); padding: 16px 16px 12px; margin: 16px 0 22px; break-inside: avoid; }
     .case img { width: 100%; border-radius: 10px; margin-top: 10px; box-shadow: 0 0 0 1px rgb(44 36 28 / .08); }
     .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -52,214 +46,199 @@
 <body>
   <div class="page">
     <section class="cover">
-      <p class="kicker">Documento de homologação · HOMO-TV-1.1</p>
+      <p class="kicker">Documento de homologação · HOMO-TV-2.1</p>
       <h1>Tao Vita</h1>
-      <p>Aceite funcional, técnico e de conteúdo educacional. Evidências com capturas reais das telas em 9/09/2026.</p>
+      <p>Aceite funcional de todo o aplicativo: cinco módulos, 18 rotas, mapas clicáveis, consulta, ficha e documentos. Evidências capturadas em 9/09/2026.</p>
       <div class="meta">
         <div><strong>Projeto</strong><br />Tao Vita — atlas de acupuntura</div>
-        <div><strong>Versão homologada</strong><br />1.1 (build com mapas clicáveis)</div>
-        <div><strong>Data da evidência</strong><br />29 de agosto de 2026</div>
-        <div><strong>Ambiente</strong><br />Aplicação web · desktop 1280 e mobile 390</div>
-        <div><strong>Repositório</strong><br />github.com/fluirdavidaoficial/Tao-Vita</div>
-        <div><strong>Parecer técnico</strong><br />Aprovado para publicação</div>
+        <div><strong>Versão homologada</strong><br />2.1 (cinco módulos)</div>
+        <div><strong>Data da evidência</strong><br />9 de setembro de 2026</div>
+        <div><strong>Ambiente</strong><br />Web · desktop 1280 e mobile 390</div>
+        <div><strong>Rotas exercidas</strong><br />18 (todas as páginas do app)</div>
+        <div><strong>Parecer técnico</strong><br />Aprovado para publicação, com ressalvas de conteúdo</div>
       </div>
     </section>
 
-    <h2>1. Objetivo da homologação</h2>
-    <p>Verificar se o produto atende o fluxo de consultório (queixa → síndrome ramificada → corpo + orelha + YNSA + riscos + ficha), se as telas críticas renderizam, se os estados vazios e de erro existem, e se o aviso educacional está visível. Este documento não é certificação médica.</p>
+    <h2>1. Escopo desta rodada</h2>
+    <p>Homologação ponta a ponta do produto atual — não só o atlas. Cobre boas-vindas, menu, atlas/diagnóstico, Yamamoto, auriculoterapia, veterinária, massagem/gatilho, consulta, ficha, documentos, 404 e consistência dos dados clínicos. Não é certificação médica.</p>
 
-    <h2>2. Critérios de aceite</h2>
+    <h2>2. Inventário verificado</h2>
+    <table>
+      <thead><tr><th>Módulo</th><th>O que existe</th><th>Checagem</th></tr></thead>
+      <tbody>
+        <tr><td>Boas-vindas / Menu</td><td>Entrar → cinco caminhos + Método e Documentos</td><td class="ok">OK</td></tr>
+        <tr><td>Atlas</td><td>14 canais, 361 pontos com foto e ficha, busca (IG4 / LI4 / Shenmen)</td><td class="ok">OK</td></tr>
+        <tr><td>Protocolos</td><td>38 queixas, 51 síndromes, busca e vazio</td><td class="ok">OK</td></tr>
+        <tr><td>Consulta</td><td>Ranking determinístico, CTA protocolo e ficha</td><td class="ok">OK</td></tr>
+        <tr><td>Orelha</td><td>34 pontos, regiões, NADA, protocolos ligados</td><td class="ok">OK</td></tr>
+        <tr><td>YNSA</td><td>31 pontos em 3 vistas; J/K só no texto</td><td class="ok">OK</td></tr>
+        <tr><td>Veterinária</td><td>Cão, gato, cavalo · corpo, dorso, cabeça · 26 pontos</td><td class="ok">OK</td></tr>
+        <tr><td>Massagem</td><td>72 gatilhos, 9 placas, vídeo reservado</td><td class="ok">OK</td></tr>
+        <tr><td>Língua / pulso</td><td>Placas originais, zonas, Cun Guan Chi</td><td class="ok">OK</td></tr>
+        <tr><td>Ficha</td><td>Vazia, gerada pela consulta, PDF / copiar / imprimir</td><td class="ok">OK</td></tr>
+        <tr><td>Vasos</td><td>Oito extraordinários + extras clicáveis</td><td class="ok">OK</td></tr>
+        <tr><td>Documentos</td><td>PDF 18&nbsp;MB, HTML, galeria, esta homologação</td><td class="ok">OK</td></tr>
+      </tbody>
+    </table>
+
+    <h2>3. Critérios de aceite</h2>
     <table>
       <thead><tr><th>ID</th><th>Critério</th><th>Resultado</th></tr></thead>
       <tbody>
-        <tr><td>CA-01</td><td>Home mostra 8 queixas frequentes, meridianos e atalho para Consulta</td><td class="ok">Atendido</td></tr>
-        <tr><td>CA-02</td><td>Protocolos listam queixas com 2–4 síndromes; busca vazia tem estado vazio</td><td class="ok">Atendido</td></tr>
-        <tr><td>CA-03</td><td>Protocolo abre corpo (link para ponto), orelha, YNSA e cautela</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-01</td><td>Boas-vindas e menu levam aos cinco módulos</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-02</td><td>Protocolos listam queixas; busca vazia tem estado vazio</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-03</td><td>Protocolo abre corpo, orelha, YNSA, cautela e ficha da sessão</td><td class="ok">Atendido</td></tr>
         <tr><td>CA-04</td><td>Consulta ranqueia síndromes com % e gera ficha</td><td class="ok">Atendido</td></tr>
-        <tr><td>CA-05</td><td>Orelha e YNSA são clicáveis (dedo / mouse) e mostram ficha do ponto</td><td class="ok">Atendido</td></tr>
-        <tr><td>CA-06</td><td>Vasos extraordinários preenchidos (não vazios)</td><td class="ok">Atendido</td></tr>
-        <tr><td>CA-07</td><td>361 pontos do atlas abrem com foto; código inválido tem vazio</td><td class="ok">Atendido</td></tr>
-        <tr><td>CA-08</td><td>Ficha da sessão copia texto e persiste no aparelho</td><td class="ok">Atendido</td></tr>
-        <tr><td>CA-09</td><td>404 e estados vazios em português, com CTA de retorno</td><td class="ok">Atendido</td></tr>
-        <tr><td>CA-10</td><td>Rodapé educacional em todas as telas; Método declara limites</td><td class="ok">Atendido</td></tr>
-        <tr><td>CA-11</td><td>Layout utilizável em 390×844, alvos grandes</td><td class="ok">Atendido</td></tr>
-        <tr><td>CA-12</td><td>Build de produção (`npm run build`) conclui sem erro</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-05</td><td>Orelha e YNSA clicáveis, com ficha do ponto</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-06</td><td>Vet (3 espécies × 3 ângulos) e massagem (mapas + dor referida)</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-07</td><td>361 pontos abrem com foto; WHO (LI4→IG4); extra (Dingchuan); código inválido vazio</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-08</td><td>Ficha copia, persiste no aparelho, exporta PDF</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-09</td><td>404 e vazios em português, com CTA</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-10</td><td>Rodapé educacional; Método declara limites; sem “cura / garante / diagnóstico automático”</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-11</td><td>Utilizável em 390×844, sem overflow horizontal, alvos grandes</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-12</td><td>Todas as 18 rotas HTTP 200 (404 só em caminho inexistente), console sem erro de app</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-13</td><td>Integridade: todo código de corpo/orelha/YNSA dos protocolos resolve; 361 fotos presentes</td><td class="ok">Atendido</td></tr>
+        <tr><td>CA-14</td><td>Cada protocolo tem 2–4 síndromes</td><td class="warn">Parcial — ver NC-01</td></tr>
       </tbody>
     </table>
 
-    <h2>3. Matriz de testes e evidências</h2>
-    <p class="muted">Status: <span class="badge">PASSOU</span> em todos os casos executados. Capturas em página inteira, ambiente web, 29/08/2026.</p>
+    <h2>4. Matriz de testes (9/09/2026)</h2>
+    <p>Status: <span class="badge">PASSOU</span> nos casos funcionais. 18 rotas em desktop e mobile, mais fluxos clicados (Entrar, Diferenciar, Gerar ficha, busca IG4/LI4/Shenmen, troca de vista YNSA/vet/massagem).</p>
 
     <article class="case">
       <p class="kicker">TC-01 · CA-01 · <span class="ok">PASSOU</span></p>
-      <h3>Atlas (home)</h3>
-      <p>Abrir a raiz. Esperado: marca Tao Vita, 8 queixas, botão Abrir consulta, grades Zang / Fu / Vasos e combinações.</p>
-      <img src="prints/01-atlas-home.png" alt="Home do Tao Vita no desktop" />
-    </article>
-
-    <article class="case">
-      <p class="kicker">TC-02 · CA-11 · <span class="ok">PASSOU</span></p>
-      <h3>Atlas no telefone (390×844)</h3>
-      <p>Mesma home em viewport mobile. Esperado: sem corte horizontal, navegação por polegar, queixas em chips.</p>
-      <img src="prints/01-atlas-home-mobile.png" alt="Home do Tao Vita no telefone" />
-    </article>
-
-    <article class="case">
-      <p class="kicker">TC-03 · CA-02 · <span class="ok">PASSOU</span></p>
-      <h3>Lista de protocolos</h3>
-      <p>Abrir Protocolos. Esperado: busca, chips de grupo (Dor, Shen, Digestão…), contagem e cards com síndromes.</p>
-      <img src="prints/02-protocolos.png" alt="Lista de protocolos" />
-    </article>
-
-    <article class="case">
-      <p class="kicker">TC-04 · CA-02 · <span class="ok">PASSOU</span></p>
-      <h3>Estado vazio da busca</h3>
-      <p>Buscar termo inexistente. Esperado: “Nada encontrado”, CTA Limpar busca — sem tela branca.</p>
-      <img src="prints/02-protocolos-vazio.png" alt="Busca de protocolos sem resultado" />
-    </article>
-
-    <article class="case">
-      <p class="kicker">TC-05 · CA-03 · <span class="ok">PASSOU</span></p>
-      <h3>Protocolo ramificado — Lombalgia</h3>
-      <p>Abrir Lombalgia. Esperado: duas síndromes (Qi do Fígado + Rim xu e Frio-Umidade), pontos de corpo clicáveis, orelha, YNSA, cautela e fontes.</p>
-      <img src="prints/03-protocolo-lombalgia.png" alt="Protocolo de lombalgia" />
-    </article>
-
-    <article class="case">
-      <p class="kicker">TC-06 · CA-04 · <span class="ok">PASSOU</span></p>
-      <h3>Consulta — estado inicial</h3>
-      <p>Abrir Consulta. Esperado: aviso de que não é diagnóstico automático, campos de queixa/língua/pulso, hint para Diferenciar.</p>
-      <img src="prints/04-consulta-idle.png" alt="Consulta em estado inicial" />
-    </article>
-
-    <article class="case">
-      <p class="kicker">TC-07 · CA-04 · <span class="ok">PASSOU</span></p>
-      <h3>Consulta — ranking</h3>
-      <p>Lombalgia + língua pálida + saburra branca + pulso corda + fator Estresse → Diferenciar. Esperado: % , mecanismo, perguntas que faltam, corpo/orelha/YNSA, botões de protocolo e ficha.</p>
-      <img src="prints/04-consulta-resultado.png" alt="Resultado da diferenciação" />
-    </article>
-
-    <article class="case">
-      <p class="kicker">TC-08 · CA-04 · <span class="ok">PASSOU</span></p>
-      <h3>Diagnóstico de estudo (língua e pulso)</h3>
-      <p>Abrir Diagnóstico. Esperado: mapa de língua e Cun/Guan/Chi clicáveis, texto de estudo, sem fingir exame automático.</p>
-      <img src="prints/05-diagnostico.png" alt="Tela de diagnóstico língua e pulso" />
-    </article>
-
-    <article class="case">
-      <p class="kicker">TC-09 · CA-05 · <span class="ok">PASSOU</span></p>
-      <h3>Orelha clicável</h3>
-      <p>Abrir Orelha, tocar Shenmen. Esperado: placa do atlas, pontos, ficha “Para que serve” e protocolos ligados (lombalgia, insônia, NADA etc.).</p>
-      <img src="prints/06-orelha.png" alt="Mapa de auriculoterapia com Shenmen selecionado" />
-    </article>
-
-    <article class="case">
-      <p class="kicker">TC-10 · CA-05 · <span class="ok">PASSOU</span></p>
-      <h3>YNSA — frente, lateral e nuca</h3>
-      <p>Três vistas. Esperado: básicos Yin na frente, D/Ypsilon na lateral, básicos Yang na nuca. Texto de palpação como guia de estudo.</p>
+      <h3>Boas-vindas e menu</h3>
+      <p>Raiz mostra Tao Vita e Entrar. Menu: Atlas, Yamamoto, Auriculoterapia, Veterinária, Massagem, Método, Documentos.</p>
       <div class="grid2">
-        <img src="prints/07-ynsa-frente.png" alt="YNSA vista frontal" />
-        <img src="prints/07-ynsa-lateral.png" alt="YNSA vista lateral" />
-      </div>
-      <img src="prints/07-ynsa-nuca.png" alt="YNSA vista da nuca" />
-    </article>
-
-    <article class="case">
-      <p class="kicker">TC-11 · CA-06 · <span class="ok">PASSOU</span></p>
-      <h3>Vasos extraordinários</h3>
-      <p>Abrir Vasos. Esperado: Du, Ren, Chong, Dai, Qiao e Wei com pontos-chave e “quando abrir”, mais pontos extras. Seção não vazia.</p>
-      <img src="prints/08-vasos.png" alt="Vasos extraordinários" />
-    </article>
-
-    <article class="case">
-      <p class="kicker">TC-12 · CA-10 · <span class="ok">PASSOU</span></p>
-      <h3>Método — limites</h3>
-      <p>Abrir Método. Esperado: o que cobre / não cobre; YNSA não é exame automático; proibição de “cura / garante / diagnóstico automático”.</p>
-      <img src="prints/09-metodo.png" alt="Página Método" />
-    </article>
-
-    <article class="case">
-      <p class="kicker">TC-13 · CA-08 · <span class="ok">PASSOU</span></p>
-      <h3>Ficha vazia e ficha gerada</h3>
-      <p>Sem sessão: estado vazio com CTA. Com query da consulta: Markdown da sessão, copiar, aviso de aparelho local.</p>
-      <div class="grid2">
-        <img src="prints/10-ficha-vazia.png" alt="Ficha vazia" />
-        <img src="prints/10-ficha-sessao.png" alt="Ficha de sessão preenchida" />
+        <img src="prints/h2-welcome.png" alt="Boas-vindas Tao Vita" />
+        <img src="prints/h2-menu.png" alt="Menu dos cinco módulos" />
       </div>
     </article>
 
     <article class="case">
-      <p class="kicker">TC-14 · CA-07 · <span class="ok">PASSOU</span></p>
-      <h3>Meridiano e ficha de ponto</h3>
-      <p>Pulmão lista 11 pontos. B23 abre foto do atlas, pinyin, protocolos que usam o ponto e placeholder de vídeo.</p>
+      <p class="kicker">TC-02 · CA-07 · <span class="ok">PASSOU</span></p>
+      <h3>Atlas, meridiano e ponto</h3>
+      <p>Atlas com 8 queixas e 14 canais. Pulmão lista 11 pontos. E36 abre ficha. Busca LI4 (WHO) abre IG4 · Hegu. Shenmen abre a orelha.</p>
       <div class="grid2">
-        <img src="prints/11-meridiano-pulmao.png" alt="Meridiano do Pulmão" />
-        <img src="prints/12-ponto-B23.png" alt="Ficha do ponto B23" />
+        <img src="prints/h2-atlas.png" alt="Atlas" />
+        <img src="prints/h2-pulmao.png" alt="Meridiano do Pulmão" />
+      </div>
+      <img src="prints/h2-e36.png" alt="Ficha do ponto E36" />
+    </article>
+
+    <article class="case">
+      <p class="kicker">TC-03 · CA-02 CA-03 · <span class="ok">PASSOU</span></p>
+      <h3>Protocolos e lombalgia</h3>
+      <p>38 protocolos. Busca “zzzz-nao-existe” → Nada encontrado → Limpar restaura 38. Lombalgia: duas síndromes, pontos clicáveis, orelha, YNSA, ficha da sessão.</p>
+      <img src="prints/h2-lombalgia.png" alt="Protocolo de lombalgia" />
+    </article>
+
+    <article class="case">
+      <p class="kicker">TC-04 · CA-04 CA-08 · <span class="ok">PASSOU</span></p>
+      <h3>Consulta → ficha</h3>
+      <p>Diferenciar em Lombalgia gera ranking com %. Gerar ficha da sessão preenche o texto (data, queixa, síndrome, pontos). Ficha vazia tem CTA.</p>
+      <div class="grid2">
+        <img src="prints/h2-consulta-rank.png" alt="Ranking da consulta" />
+        <img src="prints/h2-ficha.png" alt="Ficha gerada" />
       </div>
     </article>
 
     <article class="case">
-      <p class="kicker">TC-15 · CA-09 · <span class="ok">PASSOU</span></p>
-      <h3>Erros e vazios</h3>
-      <p>Rota inexistente, ponto XX99 e protocolo xyzzy. Esperado: empty state em português com volta ao atlas/protocolos — nunca tela vermelha crua.</p>
+      <p class="kicker">TC-05 · CA-05 · <span class="ok">PASSOU</span></p>
+      <h3>Orelha e YNSA</h3>
+      <p>Shenmen seleciona ficha + protocolos ligados. YNSA frente / lateral / nuca mudam a placa e os pontos.</p>
+      <img src="prints/h2-orelha.png" alt="Auriculoterapia com Shenmen" />
       <div class="grid2">
-        <img src="prints/13-404.png" alt="Página não encontrada" />
-        <img src="prints/14-ponto-nao-encontrado.png" alt="Ponto não encontrado" />
+        <img src="prints/h2-ynsa-lat.png" alt="YNSA lateral" />
+        <img src="prints/h2-ynsa-nuca.png" alt="YNSA nuca" />
       </div>
-      <img src="prints/15-protocolo-nao-encontrado.png" alt="Protocolo não encontrado" />
     </article>
 
     <article class="case">
-      <p class="kicker">TC-16 · CA-11 · <span class="ok">PASSOU</span></p>
-      <h3>Mobile — protocolos, consulta, orelha, YNSA, ficha</h3>
+      <p class="kicker">TC-06 · CA-06 · <span class="ok">PASSOU</span></p>
+      <h3>Veterinária e massagem</h3>
+      <p>Cão/gato/cavalo, três ângulos, pontos com equivalente humano. Massagem: queixa lombar, cervical, mapa, dor referida, slot de vídeo reservado.</p>
       <div class="grid2">
-        <img src="prints/02-protocolos-mobile.png" alt="Protocolos no telefone" />
-        <img src="prints/04-consulta-mobile.png" alt="Consulta no telefone" />
-        <img src="prints/06-orelha-mobile.png" alt="Orelha no telefone" />
-        <img src="prints/07-ynsa-mobile.png" alt="YNSA no telefone" />
+        <img src="prints/h2-vet-cabeca.png" alt="Veterinária cabeça do cavalo" />
+        <img src="prints/h2-massagem.png" alt="Pontos-gatilho lombares" />
       </div>
     </article>
 
-    <h2>4. Verificação de build</h2>
+    <article class="case">
+      <p class="kicker">TC-07 · CA-10 CA-09 · <span class="ok">PASSOU</span></p>
+      <h3>Língua/pulso, documentos e 404</h3>
+      <p>Diagnóstico: cinco fatores, zonas da língua, Cun/Guan/Chi. Documentos baixam. Rota inexistente: “Página não encontrada” com volta ao menu, rodapé educacional visível.</p>
+      <div class="grid2">
+        <img src="prints/h2-pulso.png" alt="Pulso Cun Guan Chi" />
+        <img src="prints/h2-404.png" alt="Página não encontrada" />
+      </div>
+    </article>
+
+    <article class="case">
+      <p class="kicker">TC-08 · CA-11 · <span class="ok">PASSOU</span></p>
+      <h3>Mobile 390×844</h3>
+      <p>Boas-vindas, menu, atlas, consulta, orelha, YNSA, vet, massagem: sem overflow horizontal, console limpo.</p>
+      <div class="grid2">
+        <img src="prints/h2-welcome-mobile.png" alt="Boas-vindas no telefone" />
+        <img src="prints/h2-menu-mobile.png" alt="Menu no telefone" />
+        <img src="prints/h2-massagem-mobile.png" alt="Massagem no telefone" />
+        <img src="prints/m-08-orelha.png" alt="Orelha no telefone" />
+      </div>
+    </article>
+
+    <h2>5. Integridade dos dados</h2>
     <table>
       <thead><tr><th>Checagem</th><th>Resultado</th></tr></thead>
       <tbody>
-        <tr><td>TypeScript <span class="mono">tsc --noEmit</span></td><td class="ok">Passou</td></tr>
-        <tr><td>Build de produção Vite + Nitro / Vercel</td><td class="ok">Passou (após correção do mapa clicável)</td></tr>
-        <tr><td>Smoke desktop + mobile, console limpo</td><td class="ok">Passou, sem overflow horizontal</td></tr>
-        <tr><td>Build servido vs. preview de desenvolvimento</td><td class="ok">Sem divergência</td></tr>
+        <tr><td>38 protocolos, 51 síndromes, slugs únicos</td><td class="ok">OK</td></tr>
+        <tr><td>361 pontos = soma dos 14 meridianos; 361 fotos em disco</td><td class="ok">OK</td></tr>
+        <tr><td>Todo código de corpo nos protocolos resolve (getPoint / extras)</td><td class="ok">OK</td></tr>
+        <tr><td>Todo rótulo de orelha nos protocolos existe no mapa (34)</td><td class="ok">OK</td></tr>
+        <tr><td>Todo rótulo YNSA nos protocolos existe no mapa/lista</td><td class="ok">OK</td></tr>
+        <tr><td>8 queixas frequentes do atlas existem</td><td class="ok">OK</td></tr>
+        <tr><td>Placas: orelha, 3 YNSA, 9 vet, 9 gatilho, 16 línguas</td><td class="ok">OK</td></tr>
+        <tr><td>Documentos HTML + PDF HTTP 200</td><td class="ok">OK</td></tr>
+        <tr><td>Palavras proibidas (cura / garante / diagnóstico automático) no grafo</td><td class="ok">Ausentes</td></tr>
       </tbody>
     </table>
-    <p>Falha anterior de publicação: import ausente de <em>@/components/atlas/clickable-map</em>. Corrigido na v1.1 e enviado ao GitHub (commit 1f3b817).</p>
 
-    <h2>5. Não conformidades e ressalvas</h2>
+    <h2>6. Não conformidades e ressalvas</h2>
     <table>
       <thead><tr><th>ID</th><th>Tipo</th><th>Descrição</th><th>Impacto</th></tr></thead>
       <tbody>
-        <tr><td>NC-01</td><td>Conteúdo</td><td>38 protocolos (meta 40).</td><td>Baixo — cobertura de consultório já ampla.</td></tr>
-        <tr><td>NC-02</td><td>Conteúdo</td><td>Fichas profundas (ângulo, De Qi, risco) não preenchidas nos 361 pontos; fotos “a revisar”.</td><td>Médio para estudo avançado; aceitável na v1.1.</td></tr>
-        <tr><td>NC-03</td><td>Conteúdo</td><td>Vídeo de localização ainda é placeholder.</td><td>Baixo.</td></tr>
-        <tr><td>OBS-01</td><td>Clínico</td><td>YNSA e língua/pulso são guias de estudo, não exame automático. Texto presente nas telas.</td><td>Informativo.</td></tr>
+        <tr><td>NC-01</td><td>Conteúdo</td><td>27 dos 38 protocolos têm só 1 síndrome (a meta original era 2–4). 11 já ramificam (lombalgia, insônia, ciática, etc.). Copy da lista foi ajustada nesta rodada para não prometer 2–4 em todos.</td><td>Médio para estudo de diferenciação. Não quebra o fluxo.</td></tr>
+        <tr><td>NC-02</td><td>Mídia</td><td>Vídeo da palpação na massagem é slot reservado — ainda sem arquivo.</td><td>Baixo.</td></tr>
+        <tr><td>NC-03</td><td>YNSA</td><td>J e K (pé) sem placa calibrada, só texto. Correto pedagogicamente.</td><td>Baixo.</td></tr>
+        <tr><td>NC-04</td><td>Meta</td><td>38 protocolos (meta inicial 40).</td><td>Baixo.</td></tr>
+        <tr><td>OBS-01</td><td>Clínico</td><td>O app não examina. Texto presente no rodapé, Método, Consulta, mapas.</td><td>Informativo.</td></tr>
         <tr><td>OBS-02</td><td>Privacidade</td><td>Ficha só no aparelho. Sem login, sem nuvem.</td><td>Informativo.</td></tr>
+        <tr><td>OBS-03</td><td>Consulta</td><td>Sem língua/pulso o ranking empata no basal (22%). Informe dados para diferenciar de verdade.</td><td>Informativo.</td></tr>
       </tbody>
     </table>
-    <p>Nenhuma NC impede publicação da v1.1. NC-01 a NC-03 seguem no backlog da próxima rodada.</p>
+    <p>Nenhuma NC impede publicação da v2.1. NC-01 é a única ressalva de aceite (CA-14 parcial).</p>
 
-    <h2>6. Parecer</h2>
-    <p><span class="badge">APROVADO PARA PUBLICAÇÃO</span></p>
-    <p>O Tao Vita v1.1 atende os critérios de aceite do fluxo de consultório, dos mapas clicáveis, dos estados vazios e do aviso educacional. A compilação de produção passa. Homologação clínica de conteúdo (revisão humana ponto a ponto) permanece aberta, conforme a própria página Método.</p>
+    <h2>7. Correções feitas nesta homologação</h2>
+    <ul>
+      <li>Lista de protocolos: deixou de afirmar “2 a 4 síndromes” em todos.</li>
+      <li>Ficha de ponto extra (Dingchuan etc.): o título não duplica mais o nome.</li>
+      <li>404 / ponto / protocolo / meridiano inexistentes: título em h1 (acessível).</li>
+    </ul>
 
-    <h2>7. Termo de aceite</h2>
-    <p class="muted">Preencher à mão ou digitalmente. A ausência de assinatura clínica não anula o parecer técnico de publicação.</p>
+    <h2>8. Parecer</h2>
+    <p><span class="badge">APROVADO PARA PUBLICAÇÃO</span> <span class="badge-wait">RESSALVA NC-01</span></p>
+    <p>O Tao Vita v2.1 passou na homologação funcional de todos os módulos. As 18 rotas renderizam em desktop e telefone, os mapas respondem ao toque, a consulta gera ficha, os dados clínicos cruzam sem código órfão. A ramificação de síndromes ainda é incompleta em 27 queixas — isso não impede uso de consultório, mas fica no backlog clínico. Revisão humana ponto a ponto permanece aberta, como a página Método já declara.</p>
+
+    <h2>9. Termo de aceite</h2>
+    <p>Preencher à mão ou digitalmente. A ausência de assinatura clínica não anula o parecer técnico de publicação.</p>
     <div class="sign">
       <div>Homologação técnica<br />Nome / data</div>
-      <div>Homologação clínica (acupuntura / MTC)<br />Nome / data · CRO/registro</div>
+      <div>Homologação clínica (acupuntura / MTC)<br />Nome / data · registro</div>
       <div>Produto / gestão<br />Nome / data</div>
       <div>Ciência: app educacional, não substitui exame presencial</div>
     </div>
 
     <footer>
-      HOMO-TV-1.1 · Tao Vita · 29/08/2026 · evidências em docs/prints/<br />
+      HOMO-TV-2.1 · Tao Vita · 09/09/2026 · evidências em docs/prints/h2-*<br />
       Apoio ao estudo e à prática. Não substitui exame presencial.
     </footer>
   </div>

@@ -23,6 +23,7 @@ function ProtocoloPage() {
     return (
       <EmptyState
         icon={BookOpen}
+        titleAs="h1"
         title="Protocolo não encontrado"
         description="Essa queixa não está na lista. Abra os protocolos e escolha outra."
         action={
